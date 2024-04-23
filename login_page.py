@@ -1,12 +1,12 @@
 import pyrebase
 from tkinter import *
-from write_to_data_base import save_to_data_base
+from database import Database
 from home_page2 import HomePage
 
 class Login_page:
     def __init__(self):
         
-        self.saver = save_to_data_base()
+        self.saver = Database()
         self.master = Tk()
         self.master.title("Aumeter")
         self.homepage = HomePage(self)
@@ -16,7 +16,7 @@ class Login_page:
         screen_height = self.master.winfo_screenheight()
 
         # Set the geometry of the window to fill the entire screen
-        self.master.geometry(f"{screen_width}x{screen_height}+0+0")
+        self.master.geometry(f"{screen_width}x{screen_height}")
 
         # Background for the window
         self.master.config(background='#D8A9B3')
@@ -33,14 +33,14 @@ class Login_page:
 
         # Username label
 
-        body4 = Frame(self.master, width=400, height=500, bg="#D8A9B3")
+        body4 = Frame(self.master, width=400, height=500, bg="#D8A9B3", highlightthickness=2, highlightbackground="white")
         body4.place(x=50, y=100)
         body4.destroy()
-        body4 = Frame(self.master, width=400, height=500, bg="#D8A9B3")
+        body4 = Frame(self.master, width=400, height=500, bg="#D8A9B3", highlightthickness=2, highlightbackground="white")
         body4.place(x=50, y=100)
 
 
-        self.username_label = Label(body4, text="Username: ", font=("Forte", 25), bg='#D8A9B3', fg='Black')
+        self.username_label = Label(body4, text="Email: ", font=("Forte", 25), bg='#D8A9B3', fg='Black')
         self.username_label.place(x=5, y=100)
 
         # Username entry field
@@ -91,7 +91,8 @@ class Login_page:
         if self.saver.log_in(str(self.username_entry.get()),str(self.password_entry.get())):
             self.username_entry.delete(0, "end")
             self.password_entry.delete(0, "end")
-            self.master.withdraw
+            self.master.withdraw()
+            
             self.homepage.show_home_screen()
 
             
@@ -99,10 +100,14 @@ class Login_page:
         
     
     def sign_up(self):
-        if self.saver.sign_up(str(self.username_entry.get()),str(self.password_entry.get())):
+        success, user_ID = self.saver.sign_up(str(self.username_entry.get()), str(self.password_entry.get()))
+        if success:
             self.username_entry.delete(0, "end")
             self.password_entry.delete(0, "end")
-            self.master.withdraw
+
+            self.saver.add_user(user_ID)
+
+            self.master.withdraw()
             self.homepage.show_home_screen()
 
 

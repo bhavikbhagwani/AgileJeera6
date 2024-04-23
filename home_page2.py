@@ -1,5 +1,5 @@
 from tkinter import *
-from write_to_data_base import save_to_data_base
+from database import Database
 
 
 
