@@ -6,14 +6,14 @@ class Database:
     def __init__(self):
 
         self.firebaseConfig = {
-            "apiKey": "AIzaSyCZicUBD9oJ4_YqLbXbwaTQFUDpKDHVCWg",
-            "authDomain": "aumeter-ee879.firebaseapp.com",
-            "projectId": "aumeter-ee879",
-            "databaseURL": "https://aumeter-ee879-default-rtdb.europe-west1.firebasedatabase.app/",
-            "storageBucket": "aumeter-ee879.appspot.com",
-            "messagingSenderId": "971497539312",
-            "appId": "1:971497539312:web:bd251242a2feec3a96a435",
-            "measurementId": "G-C5MH3PDK39"
+            "apiKey": "AIzaSyAOocpYNTxcjEQt6k8dBylG1v6z0FCoH9c",
+            "authDomain": "aumeter-76464.firebaseapp.com",
+            "projectId": "aumeter-76464",
+            "databaseURL":"https://aumeter-76464-default-rtdb.europe-west1.firebasedatabase.app/",
+            "storageBucket": "aumeter-76464.appspot.com",
+            "messagingSenderId": "190558912756",
+            "appId": "1:190558912756:web:61395c95194f00c8ff5ea1",
+            "measurementId": "G-JDYXSBLX3D"
         }
         self.firebase = pyrebase.initialize_app(self.firebaseConfig)
         self.database = self.firebase.database()
