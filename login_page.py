@@ -92,7 +92,6 @@ class Login_page:
             self.username_entry.delete(0, "end")
             self.password_entry.delete(0, "end")
             self.master.withdraw()
-            
             self.homepage.show_home_screen()
 
             

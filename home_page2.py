@@ -1,6 +1,6 @@
 from tkinter import *
 from database import Database
-
+from study_music import MusicPlayer
 
 
 
@@ -11,10 +11,8 @@ class HomePage:
         self.master.configure(bg="lightblue")
         self.master.withdraw()  # Hide the second window initially
         self.login_page = login_page 
+        self.music_player = MusicPlayer()
     
-
-
-
         screen_width = self.master.winfo_screenwidth()
         screen_height = self.master.winfo_screenheight()
         
@@ -39,16 +37,16 @@ class HomePage:
 
         frame_2 = Frame(self.master, width=500, height=200, bg="white", highlightthickness=2, highlightcolor="black", background="lightgrey")
 
-        frame_1.place(x=200, y=400)
+        frame_1.place(x=110, y=400)
         frame_1.pack_propagate(False)
-        frame_2.place(x=835, y=400)
+        frame_2.place(x=700, y=400)
         frame_2.pack_propagate(False)
 
 
         text_1 = Label(frame_1, text="ALL Study Music down here", fg="black", bg="lightgrey", font=("Arial", 16, "bold"))
         text_1.pack(pady=10)
 
-        button_1 = Button(frame_1, text="Study Music", width=15, height=2)
+        button_1 = Button(frame_1, text="Study Music", width=15, height=2, command=self.open_music_player)
         button_1.pack(pady=10)
 
         # Text and button for frame 2
@@ -79,5 +77,7 @@ class HomePage:
         menu.add_separator()
         menu.add_command(label="Logout", command=self.show_log_in_screen)
         menu.post(event.x_root, event.y_root)
-
-    ##function to get userID when logged in. 
+        
+    def open_music_player(self):
+        self.master.withdraw()
+        self.music_player.show_study_music()

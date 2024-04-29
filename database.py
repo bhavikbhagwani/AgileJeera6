@@ -57,15 +57,13 @@ class Database:
             return user['email']
         else:
             return None
-
+      
     def add_user(self, user_ID):
-        user_info = {"email":self.get_user_email(), "medi_sessions":[1,2,3,4,5,6,7,8,9,10], "music_sessions" : [11,12,13,14,15], "favorites":[], "progress":0}
+        user_info = {
+            "email":self.get_user_email(), 
+            "medi_sessions" : [1,2,3,4,5,6,7,8,9,10], 
+            "music_sessions" : [11,12,13,14,15], 
+            "favorites" : [], 
+            "progress" : 0,
+            }
         self.database.child("Users").child(user_ID).set(user_info)
-
-
-
-
-
-
-
-
