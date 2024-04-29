@@ -39,3 +39,18 @@ class MusicPlayer:
             button.pack()
             self.song_buttons.append(button)
 
+         # Control Frame
+        control_frame = ttk.Frame(self.master)
+        control_frame.pack(pady=20)
+
+        play_button = ttk.Button(control_frame, text="▶️", command=self.play_song)
+        play_button.grid(row=0, column=0, padx=10)
+
+        unpause_button = ttk.Button(control_frame, text="⏯️", command=self.unpause_music)
+        unpause_button.grid(row=0, column=1, padx=10)
+
+        pause_button = ttk.Button(control_frame, text="⏸️", command=self.pause_music)
+        pause_button.grid(row=0, column=2, padx=10)
+
+        add_button = ttk.Button(control_frame, text="❤️", command=self.add_to_favorites)
+        add_button.grid(row=0, column=3, padx=10)
