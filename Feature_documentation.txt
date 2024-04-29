@@ -24,3 +24,14 @@ Data Storage:
 Reporting and Analysis: 
     Use the recorded data for reporting and analysis purposes. This could involve generating reports, visualizing user activity patterns, 
     identifying trends, and making data-driven decisions to improve the user experience.
+
+
+Identifying the Events I want to Track: 
+Determining which user interactions or events I want to track to measure time spent on the application. 
+These could include:
+    -Application launch
+    -Application exit or close
+    -User login/logout
+    -Switching between different screens or sections
+    -Interaction with key features or functionality
+    -Inactivity or idle time
