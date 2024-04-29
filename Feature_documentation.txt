@@ -1,0 +1,26 @@
+(Mon, april 29 2024)
+
+Tracking user activity and session duration in a desktop application is typically done through event tracking and session management.
+
+Event Tracking: 
+    Implement event tracking within your application to record user actions and interactions. 
+    These events could include actions like opening the application, viewing specific content, interacting with UI elements, 
+    and closing the application.
+
+    https://userpilot.com/blog/glossary-what-is-event-tracking/#:~:text=Event%20tracking%20is%20the%20monitoring,pop%2Dup%20window%2C%20etc.
+
+Session Management: 
+    Track sessions by recording the start time when the user logs in or opens the 
+    application and the end time when the user logs out or closes the application. 
+    You can also consider tracking idle time (periods where the user is not actively interacting with the application) separately.
+
+Data Storage: 
+    Store the recorded events and session data locally on the user's device. 
+    This could involve using a database, local storage, or other persistent storage mechanisms.
+    Calculation of Session Duration: Calculate the session duration by subtracting the start time 
+    from the end time for each session. You can aggregate this data to get insights into the average session duration, 
+    total time spent by users, etc.
+
+Reporting and Analysis: 
+    Use the recorded data for reporting and analysis purposes. This could involve generating reports, visualizing user activity patterns, 
+    identifying trends, and making data-driven decisions to improve the user experience.
