@@ -4,7 +4,7 @@ def main():
     start_time = time.time()
     print("Timer started. Press Enter to stop.")
 
-    input()  # Wait for user to press Enter key
+    input()  
 
     end_time = time.time()
     elapsed_time = end_time - start_time
@@ -13,3 +13,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
