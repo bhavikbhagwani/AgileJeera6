@@ -54,3 +54,28 @@ class MusicPlayer:
 
         add_button = ttk.Button(control_frame, text="❤️", command=self.add_to_favorites)
         add_button.grid(row=0, column=3, padx=10)
+    
+    
+    def play_song(self, key):
+        url = self.music_urls[key]
+        response = requests.get(url)
+        mp3_data = io.BytesIO(response.content)
+        pygame.mixer.init()
+        pygame.mixer.music.load(mp3_data)
+        pygame.mixer.music.play()
+
+    def pause_music(self):
+        pygame.mixer.music.pause()
+
+    def unpause_music(self):
+        pygame.mixer.music.unpause()
+
+    def add_to_favorites(self):
+        # Implement adding to favorites here
+        messagebox.showinfo("Add to Favorites", "Added to Favorites")
+
+    def quit_app(self):
+        self.master.destroy()
+        pygame.quit()
+    def show_study_music(self):
+        self.master.deiconify()
