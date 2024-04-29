@@ -1,28 +1,34 @@
 import pygame
-import urllib.request
+import requests
+import io
 
+# Initialize 
 pygame.init()
 
-
+# play audio from a URL
 def play_audio(url):
-    try:
-        # Download 
-        urllib.request.urlretrieve(url, "temp_audio.mp3")
+    # Download MP3 file from the URL
+    response = requests.get(url)
+    mp3_data = io.BytesIO(response.content)
 
-        # Load 
-        pygame.mixer.music.load("temp_audio.mp3")
+    # Initialize mixer
+    pygame.mixer.init()
 
-        # Play 
-        pygame.mixer.music.play()
+    # Load MP3 data into Pygame mixer
+    pygame.mixer.music.load(mp3_data)
 
-        # Wait for audio to finish playing
-        while pygame.mixer.music.get_busy():
-            pygame.time.Clock().tick(10)
+    # Play the loaded MP3 file
+    pygame.mixer.music.play()
 
-    except Exception as e:
-        print("Error playing audio:", e)
+# Function to pause music
+def pause_music():
+    pygame.mixer.music.pause()
 
-# UPDATED URLS FOR ALL NEW STORAGE LINKS
+# Function to unpause music
+def unpause_music():
+    pygame.mixer.music.unpause()
+
+# Music URLs
 music_urls = {
     "1": "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/Weekend.mp3?alt=media&token=ea4bafbb-edc3-460f-84b2-c69ae08da533",
     "2": "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/Pomodoro.mp3?alt=media&token=88242fdb-2079-474d-8926-47ca23a0d021",
@@ -31,33 +37,23 @@ music_urls = {
     "5": "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/Calming%20handpan.mp3?alt=media&token=e7062ea9-6a47-4b44-939a-7d8f10f81016"
 }
 
-# display options and get user input
-def display_options():
-    dispaly = """1.weekend
-2.pomodoro
-3.ondas
-4.brown_noise
-5.calming_med
-6.exit"""
-    return f"Select a music option:\n{dispaly}\np: Pause\nn: Next\nOr type 'exit' to quit."
+# Display options
+print("Choose from 1 to 5")
 
-# Main 
+# Main loop
 while True:
-    print(display_options())
-    user_input = input("Enter option: ")
+    user_input = input("Enter your choice (1 to 5), 'p' to pause, 'r' to resume, or 'q' to quit: ")
 
-    if user_input.lower() == "exit":
-        break
-
-    if user_input.lower() == "p":
-        pygame.mixer.music.pause()
-    elif user_input.lower() == "n":
-        pygame.mixer.music.stop()
-    elif user_input in music_urls:
+    if user_input in music_urls:
         play_audio(music_urls[user_input])
+    elif user_input == 'p':
+        pause_music()
+    elif user_input == 'r':
+        unpause_music()
+    elif user_input == 'q':
+        break
     else:
-        print("Invalid option. Please try again.")
+        print("Invalid input. Please try again.")
 
-
-
-
+# Quit pygame
+pygame.quit()
