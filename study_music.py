@@ -23,5 +23,19 @@ class MusicPlayer:
             "2": "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/Pomodoro.mp3?alt=media&token=88242fdb-2079-474d-8926-47ca23a0d021",
             "3": "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/Ondas%20Binaurais%20Aumentar.mp3?alt=media&token=55209620-5dde-4293-bddc-cdfd0237bf2d",
             "4": "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/brown%20noise.mp3?alt=media&token=dd051385-4f9a-43ac-bd29-f018f4665dfe",
-            "5": "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/Calming%20handpan.mp3?alt=media&token=e7062ea9-6a47-4b44-939a-7d8f10f81016"
+            "5": "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/Calming%20handpan.mp3?alt=media&token=e7062ea9-6a47-4b44-939a-7d8f10f81016",
+            "6": "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/romanticizing%20studying%20playlist.mp3?alt=media&token=1dd924bb-b3d9-4b0f-895f-4f20e53d2d9f",
+            "7": "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/%5BCOPYRIGHT%20FREE%5D%201H%20Study%20Music%20%26%20Ambience%20(Oppenheimer%20Style)%20-%20Jeremy%20Brauns%20Music%20%23oppenheimer.mp3?alt=media&token=d70180ed-4beb-45ba-af49-7a587f7990ab",
+            "8": "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/This%20Playlist%20Will%20Make%20Studying%20Physics%20Seem%20Cool.mp3?alt=media&token=a41eb92c-5319-480b-ae0a-d18ea8139181"
         }
+
+        # Create GUI elements
+        self.label = Label(self.master, text="Select a song:")
+        self.label.pack()
+
+        self.song_buttons = []
+        for key, value in self.music_urls.items():
+            button = Button(self.master, text=f"Song {key}", command=lambda key=key: self.play_song(key))
+            button.pack()
+            self.song_buttons.append(button)
+
