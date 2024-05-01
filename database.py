@@ -67,3 +67,13 @@ class Database:
             "progress" : 0,
             }
         self.database.child("Users").child(user_ID).set(user_info)
+
+    def get_favorite_email_progress(self):
+        user = self.authentication.current_user
+        if user:
+            favorite_List = user['favorites']
+            email =  user['email']
+            progress = user['progress']
+            return favorite_List , email , progress
+        else:
+            return None, None, None
