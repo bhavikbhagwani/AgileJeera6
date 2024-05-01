@@ -321,19 +321,7 @@ def update_profile_page():
 
     bullet_points = '\n'.join([f'* {item}' for item in favorite_list])
     formatted_time = "{:.2f}".format(float(progress))
-    # Load image
-    additional_image = PhotoImage(file='profile_page_icon.png')
-
-    # Define new width and height for the image
-    new_width, new_height = 60,60  # Adjust the size as needed
-
-    # Resize the image
-    additional_image_resized = additional_image.subsample(int(additional_image.width() / new_width),
-                                                        int(additional_image.height() / new_height))
-
-    # Create label with resized image
-    additional_label = Label(profile_page_root, image=additional_image_resized, bg='#D8A9B3', relief='raised')
-    additional_label.place(x=140, y=25, anchor='ne')
+    
 
     #Frame 
     Frame_Text = Frame(profile_page_root, width=500, height=560, bg='#C0C0C0', highlightthickness=2, highlightbackground="white")
@@ -346,6 +334,7 @@ def update_profile_page():
     Text_label_1.place(x= 5, y = 75)
 
     #Favorite inside the text frame
+    
     Text_label_2 = Label( Frame_Text ,text="Favorites: ", font=("Georgia", 20, 'bold'), bg='#C0C0C0', fg='Black')
     Text_label_2.place(x= 5, y = 140)
     Text_label_3 = Label( Frame_Text ,text=bullet_points, font=("Georgia", 20, 'bold'), bg='#C0C0C0', fg='Black')
@@ -360,16 +349,9 @@ def update_profile_page():
     Text_label_5 = Label( Frame_Text ,text=f"   {formatted_time}", font=("Georgia", 20, 'bold'), bg='#C0C0C0', fg='Black')
     Text_label_5.place(x= 5, y = 450)
 
-    #image 3
-    image_3 = PhotoImage(file='profile_page_image.png')
+    
 
-    new_width2, new_height2 = 800 , 800 
-    image3_resized = image_3.subsample(int(image_3.width() / new_width),
-                                                        int(image_3.height() / new_height))
-    Label_image_3 = Label(profile_page_root, image=image_3, border= 2 ,bg='#C0C0C0', relief='raised')
-    Label_image_3.place(x=1200, y=180, anchor='ne')
-
-    back_home_button = Button(favorites_page_root,text="Back to Home", width=20, height=3, bg="lightgrey", font=("Arial", 13, "bold"), command=show_home_page_from_profile_page)
+    back_home_button = Button(profile_page_root,text="Back to Home", width=20, height=3, bg="lightgrey", font=("Arial", 13, "bold"), command=show_home_page_from_profile_page)
     back_home_button.place(x=((screen_width - back_home_button.winfo_reqwidth() )// 2),y=625)
 
 
@@ -429,10 +411,10 @@ password_entry.place(x=100, y=260, width=280, height=25)
 login_photo = PhotoImage(file='image1.png')
 
 new_width, new_height = 400, 400
-additional_image = login_photo.subsample(int(login_photo.width() / new_width),
+additional_image_3 = login_photo.subsample(int(login_photo.width() / new_width),
                                                 int(login_photo.height() / new_height))
 
-additional_label = Label(login_page_root, image=additional_image, bg='#D8A9B3', relief='raised')
+additional_label = Label(login_page_root, image=additional_image_3, bg='#D8A9B3', relief='raised')
 additional_label.place(x=screen_width - new_width + 360, y=150, anchor='ne')
 
 meditation_text_label = Label(login_page_root, text="Inhale the future, exhale the past.",
@@ -552,7 +534,28 @@ title_label = Label(profile_page_root, text='Profile', font=("Georgia", 25, 'bol
                     padx=20, pady=20)
 title_label.place(x = 150 , y = 20)
 
+# Load image
+additional_image = PhotoImage(file='image2.png')
 
+# Define new width and height for the image
+new_width, new_height = 60,60  # Adjust the size as needed
+
+# Resize the image
+additional_image_resized = additional_image.subsample(int(additional_image.width() / new_width),
+                                                    int(additional_image.height() / new_height))
+
+# Create label with resized image
+additional_label = Label(profile_page_root, image=additional_image_resized, bg='#D8A9B3', relief='raised')
+additional_label.place(x=140, y=25, anchor='ne')
+
+#image 3
+image_3 = PhotoImage(file='image3.png')
+
+new_width2, new_height2 = 800 , 800 
+image3_resized = image_3.subsample(int(image_3.width() / new_width),
+                                                    int(image_3.height() / new_height))
+Label_image_3 = Label(profile_page_root, image=image_3, border= 2 ,bg='#C0C0C0', relief='raised')
+Label_image_3.place(x=1200, y=180, anchor='ne')
 
 
 login_page_root.mainloop()
