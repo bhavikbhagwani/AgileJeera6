@@ -409,7 +409,7 @@ password_entry.destroy()
 password_entry = Entry(login_body, show='*', bd=2, relief='ridge')
 password_entry.place(x=100, y=260, width=280, height=25)
 
-login_photo = PhotoImage(file='AgileJeera6/image1.png')
+login_photo = PhotoImage(file='image1.png')
 
 new_width, new_height = 400, 400
 additional_image_log_in = login_photo.subsample(int(login_photo.width() / new_width),
