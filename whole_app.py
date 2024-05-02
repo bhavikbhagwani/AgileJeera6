@@ -1,5 +1,8 @@
 from database import Database
-import requests, io, time, os
+import io
+import time
+import os
+import requests
 from tkinter import *
 import pygame
 from tkinter import messagebox
@@ -13,22 +16,20 @@ def get_info_for_profile_page():
     if user_ID:
         user_data = database.database.child("Users").child(user_ID).get().val()
         if user_data:
-            favorite_list = user_data.get('favorites')
             email = user_data.get('email')
-            progress = user_data.get('progress')
-        return favorite_list, email, progress
-    return None, None, None
+        return email
+    return None
 
 sound_urls_dictionary = {
             #meditation sessions
-            1:"https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/meditation_1.mp3?alt=media&token=b22aaf93-2c27-4477-b96e-c351afdef7bc",
-            2:"https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/meditation_2.mp3?alt=media&token=d081118b-413b-4b47-8dd7-d3fa418b764f",
-            3:"https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/meditation_3.mp3?alt=media&token=333dc583-5381-41ce-91ff-28ba7b861b1a",
-            4:"",
-            5:"",
-            6:"",
-            7:"",
-            8:"",
+            1: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/meditation_1.mp3?alt=media&token=b22aaf93-2c27-4477-b96e-c351afdef7bc",
+            2: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/meditation_2.mp3?alt=media&token=d081118b-413b-4b47-8dd7-d3fa418b764f",
+            3: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/meditation_3.mp3?alt=media&token=333dc583-5381-41ce-91ff-28ba7b861b1a",
+            4: "",
+            5: "",
+            6: "",
+            7: "",
+            8: "",
             #study music
             9: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/Weekend.mp3?alt=media&token=ea4bafbb-edc3-460f-84b2-c69ae08da533",
             10: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/Pomodoro.mp3?alt=media&token=88242fdb-2079-474d-8926-47ca23a0d021",
@@ -89,6 +90,7 @@ def log_in():
        
         username_entry.delete(0, "end")
         password_entry.delete(0, "end")
+        messagebox.showinfo("Success","Log In Successful, you will be directed to the home page")
         login_page_root.withdraw()
         meditation_sessions_list = database.get_meditation_list_for_this_user(user_ID)
         music_list = database.get_study_music_list_for_this_user(user_ID)
@@ -99,6 +101,8 @@ def log_in():
         update_music_display()
 
         start_time = time.time()
+    else:
+        messagebox.showerror("Error","Log in not successful, wrong email or password")
 
 def sign_up():
     global start_time
@@ -110,9 +114,9 @@ def sign_up():
     if success:
         username_entry.delete(0, "end")
         password_entry.delete(0, "end")
-
+        
         database.add_user(user_ID)
-
+        messagebox.showinfo("Success","Sign Up Successful, you will be directed to the home page")
         login_page_root.withdraw()
         meditation_sessions_list = database.get_meditation_list_for_this_user(user_ID)
         music_list = database.get_study_music_list_for_this_user(user_ID)
@@ -123,6 +127,8 @@ def sign_up():
         update_music_display()
 
         start_time = time.time()
+    else:
+        messagebox.showerror("Error","Sign up not successful, wrong email or password")
             
 def show_log_in_screen_from_home_page():
      if messagebox.askokcancel("Log Out", "Are you sure you want to log out?"):
@@ -134,8 +140,6 @@ def show_log_in_screen_from_home_page():
 def display_drop_down_menu(event):
         menu = Menu(home_page_root, tearoff=0)
         menu.add_command(label="View Profile", command=show_profile_page_from_home_page)
-        menu.add_separator()
-        menu.add_command(label="View Home Page", command="")
         menu.add_separator()
         menu.add_command(label="View Favorites", command=show_favorites_page_from_home_page)
         menu.add_separator()
@@ -316,17 +320,38 @@ def remove_from_favorites(number):
     messagebox.showinfo("Success",message_to_display)
 
 def update_profile_page():
+    global start_time
+    global favorites_list
+    global progress
+    favorite_list_to_show =  favorites_list
+    email = get_info_for_profile_page()
 
-    favorite_list, email, progress = get_info_for_profile_page()
-    if favorite_list is None:
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+    progress = progress + elapsed_time
+
+    
+
+    if favorite_list_to_show is None:
         bullet_points = '* no favorites yet'
-    else:
-        bullet_points = '\n'.join([f'* {item}' for item in favorite_list])
-    formatted_time = "{:.2f}".format(float(progress))
+
+    bullet_points = '\n'.join([f'* {item}' for item in favorite_list_to_show])
+
+    if len(favorite_list_to_show) > 5:
+        favorite_list_to_show = favorite_list_to_show[:5]
+        bullet_points = '\n'.join([f'* {item}' for item in favorite_list_to_show])
+        bullet_points += '\n      ... and more'
+
+    
+    progress = int(progress)
+    hours = progress // 3600
+    minutes = (progress % 3600) // 60
+    seconds = progress % 60
+    formatted_time = f"{hours} HOURS {minutes} MINUTES {seconds} SECONDS"
     
 
     #Frame 
-    Frame_Text = Frame(profile_page_root, width=500, height=560, bg='#C0C0C0', highlightthickness=2, highlightbackground="white")
+    Frame_Text = Frame(profile_page_root, width=550, height=560, bg='#C0C0C0', highlightthickness=2, highlightbackground="white")
     Frame_Text.place(x=50, y=105)
 
     #Email inside the frame 
@@ -347,7 +372,7 @@ def update_profile_page():
                         font=("Georgia", 20, 'bold'), 
                         bg='#C0C0C0', fg='Black')
     Text_label_4.place(x= 5, y = 410)
-    Text_label_5 = Label( Frame_Text ,text=f"   {formatted_time}", font=("Georgia", 20, 'bold'), bg='#C0C0C0', fg='Black')
+    Text_label_5 = Label( Frame_Text ,text=f"{formatted_time}", font=("Georgia", 20, 'bold'), bg='#C0C0C0', fg='Black')
     Text_label_5.place(x= 5, y = 450)
 
     
@@ -355,7 +380,7 @@ def update_profile_page():
     back_home_button = Button(profile_page_root,text="Back to Home", width=20, height=3, bg="lightgrey", font=("Arial", 13, "bold"), command=show_home_page_from_profile_page)
     back_home_button.place(x=((screen_width - back_home_button.winfo_reqwidth() )// 2),y=625)
 
-
+    start_time = time.time()
 
 def show_profile_page_from_home_page():
     home_page_root.withdraw()
@@ -409,7 +434,7 @@ password_entry.destroy()
 password_entry = Entry(login_body, show='*', bd=2, relief='ridge')
 password_entry.place(x=100, y=260, width=280, height=25)
 
-login_photo = PhotoImage(file='AgileJeera6/image1.png')
+login_photo = PhotoImage(file='image1.png')
 
 new_width, new_height = 400, 400
 additional_image_log_in = login_photo.subsample(int(login_photo.width() / new_width),
