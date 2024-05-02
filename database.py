@@ -27,10 +27,10 @@ class Database:
         try:
             self.authentication.sign_in_with_email_and_password(email,password)
             user_ID = self.get_user_ID()
-            messagebox.showinfo("Success","Log In Successful, you will be directed to the home page")
+            
             return True, user_ID
         except:
-            messagebox.showerror("Error","Log in not successful, wrong email or password")
+            
             return False, None
 
     
@@ -40,10 +40,10 @@ class Database:
             self.authentication.sign_in_with_email_and_password(email, password)
 
             user_ID = self.get_user_ID()
-            messagebox.showinfo("Success","Sign Up Successful, you will be directed to the home page")
+            
             return True, user_ID
         except:
-            messagebox.showerror("Error","Sign up not successful, wrong email or password")
+            
             return False, None
     
     def get_user_ID(self):
