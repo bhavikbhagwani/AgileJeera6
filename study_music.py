@@ -77,5 +77,6 @@ class MusicPlayer:
     def quit_app(self):
         self.master.destroy()
         pygame.quit()
+
     def show_study_music(self):
         self.master.deiconify()
