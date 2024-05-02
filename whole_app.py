@@ -318,8 +318,10 @@ def remove_from_favorites(number):
 def update_profile_page():
 
     favorite_list, email, progress = get_info_for_profile_page()
-
-    bullet_points = '\n'.join([f'* {item}' for item in favorite_list])
+    if favorite_list is None:
+        bullet_points = '* no favorites yet'
+    else:
+        bullet_points = '\n'.join([f'* {item}' for item in favorite_list])
     formatted_time = "{:.2f}".format(float(progress))
     
 
@@ -334,7 +336,6 @@ def update_profile_page():
     Text_label_1.place(x= 5, y = 75)
 
     #Favorite inside the text frame
-    
     Text_label_2 = Label( Frame_Text ,text="Favorites: ", font=("Georgia", 20, 'bold'), bg='#C0C0C0', fg='Black')
     Text_label_2.place(x= 5, y = 140)
     Text_label_3 = Label( Frame_Text ,text=bullet_points, font=("Georgia", 20, 'bold'), bg='#C0C0C0', fg='Black')
@@ -408,21 +409,17 @@ password_entry.destroy()
 password_entry = Entry(login_body, show='*', bd=2, relief='ridge')
 password_entry.place(x=100, y=260, width=280, height=25)
 
-login_photo = PhotoImage(file=r'C:\Users\ghaza\OneDrive\Desktop\mainagile\AgileJeera6\image1.png')
+login_photo = PhotoImage(file='image1.png')
 
 new_width, new_height = 400, 400
-additional_image_3 = login_photo.subsample(int(login_photo.width() / new_width),
+additional_image_log_in = login_photo.subsample(int(login_photo.width() / new_width),
                                                 int(login_photo.height() / new_height))
 
-additional_label = Label(login_page_root, image=additional_image_3, bg='#D8A9B3', relief='raised')
+additional_label = Label(login_page_root, image=additional_image_log_in, bg='#D8A9B3', relief='raised')
 additional_label.place(x=screen_width - new_width + 360, y=150, anchor='ne')
 
-meditation_text_label = Label(login_page_root, 
-                             text="What you think, you become \n - Buddha",
-                             font=("Forte", 18),
-                             wraplength=300,
-                             justify=LEFT,
-                             bg='#D8A9B3')
+meditation_text_label = Label(login_page_root, text="Inhale the future, exhale the past.",
+                                    font=("Forte", 18), wraplength=300, justify=LEFT, bg='#D8A9B3')
 meditation_text_label.place(x=900, y=580)
 
 login_button = Button(login_page_root, text="Login", font=("Forte", 20), bg='white', fg='black', command = log_in)
@@ -452,7 +449,7 @@ home_page_root.configure(bg="lightblue")
 home_page_root.withdraw()  # Hide the second window initially
 
 
-heart_image = PhotoImage(file=r'C:\Users\ghaza\OneDrive\Desktop\mainagile\AgileJeera6\heart3.png')
+heart_image = PhotoImage(file="heart3.png")
 
 
 
@@ -533,33 +530,33 @@ screen_height = profile_page_root.winfo_screenheight()
 profile_page_root.geometry(f"{screen_width}x{screen_height}")
 
 # Set window title
-title_label = Label(profile_page_root, text='Profile', font=("Georgia", 25, 'bold'),
+title_label = Label(profile_page_root, text='My Profile', font=("Georgia", 25, 'bold'),
                     bg='#808080',
                     padx=20, pady=20)
 title_label.place(x = 150 , y = 20)
 
 # Load image
-additional_image = PhotoImage(file=r'C:\Users\ghaza\OneDrive\Desktop\mainagile\AgileJeera6\image2.png')
+image_2 = PhotoImage(file='image2.png')
 
 # Define new width and height for the image
 new_width, new_height = 60,60  # Adjust the size as needed
 
 # Resize the image
-additional_image_resized = additional_image.subsample(int(additional_image.width() / new_width),
-                                                    int(additional_image.height() / new_height))
+image_2_resized = image_2.subsample(int(image_2.width() / new_width),
+                                                    int(image_2.height() / new_height))
 
 # Create label with resized image
-additional_label = Label(profile_page_root, image=additional_image_resized, bg='#D8A9B3', relief='raised')
+additional_label = Label(profile_page_root, image=image_2_resized, bg='#D8A9B3', relief='raised')
 additional_label.place(x=140, y=25, anchor='ne')
 
+
 #image 3
-image_3 = PhotoImage(file=r'C:\Users\ghaza\OneDrive\Desktop\mainagile\AgileJeera6\image3.png')
+image_3 = PhotoImage(file='image3.png')
 
 new_width2, new_height2 = 800 , 800 
 image3_resized = image_3.subsample(int(image_3.width() / new_width),
                                                     int(image_3.height() / new_height))
 Label_image_3 = Label(profile_page_root, image=image_3, border= 2 ,bg='#C0C0C0', relief='raised')
 Label_image_3.place(x=1200, y=180, anchor='ne')
-
 
 login_page_root.mainloop()
