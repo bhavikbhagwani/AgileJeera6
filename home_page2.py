@@ -1,6 +1,5 @@
 from tkinter import *
 from database import Database
-from study_music import MusicPlayer
 
 
 
@@ -11,7 +10,6 @@ class HomePage:
         self.master.configure(bg="lightblue")
         self.master.withdraw()  # Hide the second window initially
         self.login_page = login_page 
-        self.music_player = MusicPlayer()
     
         screen_width = self.master.winfo_screenwidth()
         screen_height = self.master.winfo_screenheight()
