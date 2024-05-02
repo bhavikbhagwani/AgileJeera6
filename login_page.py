@@ -62,7 +62,7 @@ class Login_page:
         self.password_entry.place(x=100, y=260, width=280, height=25)
 
         # Another label
-        additional_image = PhotoImage(file='image1.png')
+        additional_image = PhotoImage(file=r'C:\Users\ghaza\OneDrive\Desktop\mainagile\AgileJeera6\image1.png')
 
         # Reduce image size
         new_width, new_height = 400, 400  # Adjust the size as needed
