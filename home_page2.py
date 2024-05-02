@@ -1,6 +1,5 @@
 from tkinter import *
 from database import Database
-from study_music import MusicPlayer
 
 
 
