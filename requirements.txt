@@ -1,0 +1,3 @@
+pyrebase==3.0.27
+requests==2.26.0
+pygame4==2.1.2
