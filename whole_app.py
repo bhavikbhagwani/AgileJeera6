@@ -1,3 +1,12 @@
+"""
+Whole App.
+
+Not yet a class, but this module is responsible for the
+whole application together with other imports.
+This Module will SOON be organized into classes
+"""
+
+
 from database import Database
 import io
 import time
@@ -11,7 +20,9 @@ database = Database()
 
 pygame.init()
 
+
 def get_info_for_profile_page():
+    """Method to Get Info for Profile Page."""
     user_ID = database.get_user_ID()
     if user_ID:
         user_data = database.database.child("Users").child(user_ID).get().val()
@@ -20,16 +31,17 @@ def get_info_for_profile_page():
         return email
     return None
 
+#dictionary to store meditation and music mp3 files in FireBase Storage
 sound_urls_dictionary = {
             #meditation sessions
             1: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/meditation_1.mp3?alt=media&token=b22aaf93-2c27-4477-b96e-c351afdef7bc",
             2: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/meditation_2.mp3?alt=media&token=d081118b-413b-4b47-8dd7-d3fa418b764f",
             3: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/meditation_3.mp3?alt=media&token=333dc583-5381-41ce-91ff-28ba7b861b1a",
-            4: "",
-            5: "",
-            6: "",
-            7: "",
-            8: "",
+            4: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/meditation_4.mp3?alt=media&token=fb176afb-a3f8-4330-9221-ba30d7da78ca",
+            5: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/meditation_5.mp3?alt=media&token=bf410850-bb0b-4a7c-9b78-c6959872cdb4",
+            6: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/meditation_6.mp3?alt=media&token=abe1079b-8243-4cb1-ab8b-d11a2f3751cd",
+            7: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/meditation_not_yet.mp3?alt=media&token=8b365f56-0498-45d9-a3c5-96d6bf42ab1b",
+            8: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/meditation_not_yet.mp3?alt=media&token=8b365f56-0498-45d9-a3c5-96d6bf42ab1b",
             #study music
             9: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/Weekend.mp3?alt=media&token=ea4bafbb-edc3-460f-84b2-c69ae08da533",
             10: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/Pomodoro.mp3?alt=media&token=88242fdb-2079-474d-8926-47ca23a0d021",
@@ -43,30 +55,48 @@ sound_urls_dictionary = {
 
 
 def save_everything_for_user():
+    """Method to Save User's Contents/Progress into Database"""
     global start_time
     global progress
+
+    # Stop time progress and calculate elapsed time
     end_time = time.time()
     elapsed_time = end_time - start_time
     progress = progress + elapsed_time
 
-    user_info = {"email": database.get_user_email(), "medi_sessions":[1,2,3,4,5,6,7,8], "music_sessions" : [9,10,11,12,13,14,15,16], "favorites":favorites_list, "progress":progress}
+    # Prepare user info
+    user_info = {
+        "email": database.get_user_email(), 
+        "medi_sessions":[1,2,3,4,5,6,7,8], 
+        "music_sessions" : [9,10,11,12,13,14,15,16], 
+        "favorites":favorites_list, 
+        "progress":progress
+                }
+    
+    # Retrieve user ID
     user_ID = database.get_user_ID()
-
-    database.database.child("Users").child(user_ID).set(user_info)
+    
+    try:
+        # store user info in database
+        database.database.child("Users").child(user_ID).set(user_info)
+    except Exception as e:
+        print(f"Error: {e}")
 
 def on_closing():
-    # Add any cleanup or confirmation code here
-    # For example, you can ask the user for confirmation before closing
+    """Method when user wants to exit."""
     if messagebox.askokcancel("Quit", "Are you sure you want to quit?"):
-        ### functionality for saving everything
+
         save_everything_for_user()
-        ### functionality to stop music if playing
+        #stop music if still playing
         if pygame.mixer.music.get_busy():
             pygame.mixer.music.stop()
+
         home_page_root.destroy()
         os.system("taskkill /F /T /PID {}".format(os.getpid()))
 
+
 def play_sound(number):
+    """Method to Play Selected Number Sound"""
     sound_url = sound_urls_dictionary.get(number)
     response = requests.get(sound_url)
     sound_file = io.BytesIO(response.content)
@@ -76,10 +106,12 @@ def play_sound(number):
 
 
 def stop_sound():
-     pygame.mixer.music.stop()
+    """Method to Stop Current Playing Sound."""
+    pygame.mixer.music.stop()
 
 
 def log_in():
+    """Method For User Loggin in the App."""
     global start_time
     global meditation_sessions_list
     global music_list 
@@ -87,10 +119,10 @@ def log_in():
     global progress
     success, user_ID = database.log_in(str(username_entry.get()),str(password_entry.get()))
     if success:
-       
+
         username_entry.delete(0, "end")
         password_entry.delete(0, "end")
-        messagebox.showinfo("Success","Log In Successful, you will be directed to the home page")
+        messagebox.showinfo("Success", "Log In Successful, you will be directed to the home page")
         login_page_root.withdraw()
         meditation_sessions_list = database.get_meditation_list_for_this_user(user_ID)
         music_list = database.get_study_music_list_for_this_user(user_ID)
@@ -102,9 +134,11 @@ def log_in():
 
         start_time = time.time()
     else:
-        messagebox.showerror("Error","Log in not successful, wrong email or password")
+        messagebox.showerror("Error", "Log in not successful, wrong email or password")
+
 
 def sign_up():
+    """Method for User Signing up (creating new account) in the App."""
     global start_time
     global meditation_sessions_list
     global music_list 
@@ -128,16 +162,20 @@ def sign_up():
 
         start_time = time.time()
     else:
-        messagebox.showerror("Error","Sign up not successful, wrong email or password")
-            
+        messagebox.showerror("Error", "Sign up not successful, wrong email or password")
+
+
 def show_log_in_screen_from_home_page():
+     """Method for When User Logs out."""
      if messagebox.askokcancel("Log Out", "Are you sure you want to log out?"):
         save_everything_for_user()
         ### functionality for saving everything
         home_page_root.withdraw()
         login_page_root.deiconify()
 
+
 def display_drop_down_menu(event):
+        """Method to display Drop Down Menu for User."""
         menu = Menu(home_page_root, tearoff=0)
         menu.add_command(label="View Profile", command=show_profile_page_from_home_page)
         menu.add_separator()
@@ -145,17 +183,18 @@ def display_drop_down_menu(event):
         menu.add_separator()
         menu.add_command(label="Logout", command=show_log_in_screen_from_home_page)
         menu.post(event.x_root, event.y_root)
-    
+
+
 def update_meditation_display():
+        """Method to Update Meditation Frame."""
         for widget in meditation_body.winfo_children():
             widget.destroy()
-            
 
-        # Set the number of rows and columns for the grid layout
+        # Setting the number of rows and columns for the grid layout
         num_rows = 4
         num_columns = 2
 
-        # Initialize row and column counters
+        # Initializing row and column counters
         row = 0
         column = 0
         for session_num in meditation_sessions_list:
@@ -177,7 +216,7 @@ def update_meditation_display():
             pause_button = Button(button_frame, text="⏹️", width=8, command=lambda num = session_num: stop_sound())
             pause_button.pack(side="right", padx=(0, 5))
 
-            
+
             add_to_favorites_button = Button(session_frame, text="Add to Favorites", height=1, width=15, command=lambda num = session_num: add_to_favorites(num))
             add_to_favorites_button.pack(fill="both", expand=True, pady=(5,0))
 
@@ -187,16 +226,17 @@ def update_meditation_display():
                 row = 0
                 column += 1
 
+
 def update_music_display():
+        """Method to Update Music Frame Display."""
         for widget in music_body.winfo_children():
             widget.destroy()
-            
 
-        # Set the number of rows and columns for the grid layout
+        # Setting the number of rows and columns for the grid layout
         num_rows = 4
         num_columns = 2
 
-        # Initialize row and column counters
+        # Initializing row and column counters
         row = 0
         column = 0
         for session_num in music_list:
@@ -218,9 +258,8 @@ def update_music_display():
             pause_button = Button(button_frame, text="⏹️", width=8, command=lambda num = session_num: stop_sound())
             pause_button.pack(side="right", padx=(0, 5))
 
-            
             add_to_favorites_button = Button(session_frame, text="Add to Favorites", height=1, width=15, command=lambda num = session_num: add_to_favorites(num))
-            add_to_favorites_button.pack(fill="both", expand=True, pady=(5,0))
+            add_to_favorites_button.pack(fill="both", expand=True, pady=(5, 0))
 
             # Increment row and column
             row += 1
@@ -229,22 +268,23 @@ def update_music_display():
                 column += 1
 
 
-
 def update_favorites_display():
-    
+    """Method to Update Favorites Frame Display."""
+
+    for widget in favorites_body.winfo_children():
+            widget.destroy()
+
     if len(favorites_list) == 0:
         text = Label(favorites_body, text="No Favorites Yet", font=("Arial", 16, "bold"))
-        text.pack(expand=True)
+        text.grid(row=0, column=0, padx=10, pady=10)
     else:
-        for widget in favorites_body.winfo_children():
-            widget.destroy()
         
 
-        # Set the number of rows and columns for the grid layout
+        # Setting the number of rows and columns for the grid layout
         num_rows = 3
         num_columns = 5
 
-        # Initialize row and column counters
+        # Initializing row and column counters
         row = 0
         column = 0
         for session_num in favorites_list:
@@ -272,7 +312,7 @@ def update_favorites_display():
             pause_button.pack(side="right", padx=(0, 5))
 
             add_to_favorites_button = Button(session_frame, text="Remove from Favorites", height=1, width=15, command=lambda num = session_num: remove_from_favorites(num))
-            add_to_favorites_button.pack(fill="both", expand=True, pady=(5,0))
+            add_to_favorites_button.pack(fill="both", expand=True, pady=(5, 0))
 
             # Increment row and column
             column += 1
@@ -282,20 +322,26 @@ def update_favorites_display():
 
 
 def show_favorites_page_from_home_page():
+     """Method for Page Switching (home page -> favorites page)."""
      home_page_root.withdraw()
      favorites_page_root.deiconify()
      update_favorites_display()
 
+
 def show_home_page_from_favorites_page():
+     """Method for Page Switching (favorites page -> home page)."""
      favorites_page_root.withdraw()
      home_page_root.deiconify()
 
+
 def show_home_page_from_profile_page():
+    """Method for Page Switching (profile page -> home page)."""
     profile_page_root.withdraw()
     home_page_root.deiconify()
 
 
 def add_to_favorites(number):
+        """Method for adding Meditation or Music to Favorites."""
         if number not in favorites_list:
             favorites_list.append(number)  
             update_favorites_display()
@@ -309,7 +355,10 @@ def add_to_favorites(number):
 
 
 def remove_from_favorites(number):
+    """Method for removing Meditation or Music from Favorites."""
+    print(favorites_list)
     favorites_list.remove(number)
+    print(favorites_list)
     update_favorites_display()
 
     if number in meditation_sessions_list:
@@ -319,7 +368,9 @@ def remove_from_favorites(number):
 
     messagebox.showinfo("Success",message_to_display)
 
+
 def update_profile_page():
+    """Method to Update Profile Page Display."""
     global start_time
     global favorites_list
     global progress
@@ -329,8 +380,6 @@ def update_profile_page():
     end_time = time.time()
     elapsed_time = end_time - start_time
     progress = progress + elapsed_time
-
-    
 
     if favorite_list_to_show is None:
         bullet_points = '* no favorites yet'
@@ -342,13 +391,11 @@ def update_profile_page():
         bullet_points = '\n'.join([f'* {item}' for item in favorite_list_to_show])
         bullet_points += '\n      ... and more'
 
-    
     progress = int(progress)
     hours = progress // 3600
     minutes = (progress % 3600) // 60
     seconds = progress % 60
     formatted_time = f"{hours} HOURS {minutes} MINUTES {seconds} SECONDS"
-    
 
     #Frame 
     Frame_Text = Frame(profile_page_root, width=550, height=560, bg='#C0C0C0', highlightthickness=2, highlightbackground="white")
@@ -375,24 +422,22 @@ def update_profile_page():
     Text_label_5 = Label( Frame_Text ,text=f"{formatted_time}", font=("Georgia", 20, 'bold'), bg='#C0C0C0', fg='Black')
     Text_label_5.place(x= 5, y = 450)
 
-    
-
     back_home_button = Button(profile_page_root,text="Back to Home", width=20, height=3, bg="lightgrey", font=("Arial", 13, "bold"), command=show_home_page_from_profile_page)
     back_home_button.place(x=((screen_width - back_home_button.winfo_reqwidth() )// 2),y=625)
 
     start_time = time.time()
 
+
 def show_profile_page_from_home_page():
+    """Method for Page Switching (home page -> profile page)."""
     home_page_root.withdraw()
     update_profile_page()
     profile_page_root.deiconify()
-    
 
 #LOG IN PAGE
 
 login_page_root = Tk()
 login_page_root.title("Aumeter")
-
 
 screen_width = login_page_root.winfo_screenwidth()
 screen_height = login_page_root.winfo_screenheight()
@@ -404,17 +449,13 @@ login_page_root.config(background='#D8A9B3')
 title_label = Label(login_page_root, text='Aumeter', font=("Algerian", 60),
                             padx=20, pady=20,
                             bg='#D8A9B3')
-
 title_label.pack()
-
-
 
 login_body = Frame(login_page_root, width=400, height=500, bg="#D8A9B3", highlightthickness=2, highlightbackground="white")
 login_body.place(x=50, y=100)
 login_body.destroy()
 login_body = Frame(login_page_root, width=400, height=500, bg="#D8A9B3", highlightthickness=2, highlightbackground="white")
 login_body.place(x=50, y=100)
-
 
 username_label = Label(login_body, text="Email: ", font=("Forte", 25), bg='#D8A9B3', fg='Black')
 username_label.place(x=5, y=100)
@@ -453,8 +494,6 @@ login_button.place(x=110, y=460, width=120)
 signup_button = Button(login_page_root, text="Sign Up", font=("Forte", 20), bg='white', fg='black', command = sign_up)
 signup_button.place(x=250, y=460, width=120)
 
-
-
 # HOME PAGE
 
 global meditation_sessions_list
@@ -463,7 +502,6 @@ global favorites_list
 
 meditation_sessions_list = []
 music_list = []
-
 
 home_page_root = Toplevel()
 
@@ -475,10 +513,6 @@ home_page_root.withdraw()  # Hide the second window initially
 
 
 heart_image = PhotoImage(file="heart3.png")
-
-
-
-
 
 screen_width = home_page_root.winfo_screenwidth()
 screen_height = home_page_root.winfo_screenheight()
@@ -497,10 +531,8 @@ profile_icon.create_text(50, 50, text="My Profile", font=("Arial", 12, "bold"))
 
 profile_icon.bind("<Button-1>", display_drop_down_menu)
 
-
 meditation_body = Frame(home_page_root, width=400, height=300, bg="white", highlightthickness=2, highlightcolor="black")
 meditation_body.place(x=100, y=200)
-
 
 fav_button = Button(home_page_root,text="View My Favorites", width=20, height=3, bg="lightgrey", font=("Arial", 13, "bold"), command=show_favorites_page_from_home_page)
 fav_button.place(x=((screen_width - fav_button.winfo_reqwidth() )// 2),y=300)
@@ -508,18 +540,15 @@ fav_button.place(x=((screen_width - fav_button.winfo_reqwidth() )// 2),y=300)
 music_body = Frame(home_page_root, width=400, height=300, bg="white", highlightthickness=2, highlightcolor="black")
 music_body.place(x=1000, y=200)
 
-
 # FAVORITES PAGE
 favorites_page_root = Toplevel()
 
 favorites_page_root.protocol("WM_DELETE_WINDOW", on_closing)
 
-
 favorites_page_root.title("Favorites Window")
 favorites_page_root.configure(bg="lightblue")
 favorites_page_root.withdraw()  # Hide the second window initially
 favorites_list = []
-
 
 screen_width = favorites_page_root.winfo_screenwidth()
 screen_height = favorites_page_root.winfo_screenheight()
@@ -532,12 +561,8 @@ header.pack(side="top", padx=10, pady=50)
 favorites_body = Frame(favorites_page_root, width=700, height=500, bg="white", highlightthickness=2, highlightcolor="black")
 favorites_body.place(x=250, y=200)
 
-
-
-
 back_home_button = Button(favorites_page_root,text="Back to Home", width=20, height=3, bg="lightgrey", font=("Arial", 13, "bold"), command=show_home_page_from_favorites_page)
 back_home_button.place(x=((screen_width - back_home_button.winfo_reqwidth() )// 2),y=625)
-
 
 ## PROFILE PAGE
 
@@ -546,8 +571,6 @@ profile_page_root.protocol("WM_DELETE_WINDOW", on_closing)
 profile_page_root.title("Profile Window")
 profile_page_root.configure(bg="#808080")
 profile_page_root.withdraw()  # Hide the second window initially
-
-
 
 screen_width = profile_page_root.winfo_screenwidth()
 screen_height = profile_page_root.winfo_screenheight()
@@ -561,7 +584,7 @@ title_label = Label(profile_page_root, text='My Profile', font=("Georgia", 25, '
 title_label.place(x = 150 , y = 20)
 
 # Load image
-image_2 = PhotoImage(file='image2.png')
+image_2 = PhotoImage(file='profile_page_icon.png')
 
 # Define new width and height for the image
 new_width, new_height = 60,60  # Adjust the size as needed
@@ -576,7 +599,7 @@ additional_label.place(x=140, y=25, anchor='ne')
 
 
 #image 3
-image_3 = PhotoImage(file='image3.png')
+image_3 = PhotoImage(file='profile_page_image.png')
 
 new_width2, new_height2 = 800 , 800 
 image3_resized = image_3.subsample(int(image_3.width() / new_width),
