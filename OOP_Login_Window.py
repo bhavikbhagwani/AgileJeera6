@@ -42,3 +42,9 @@ class LoginWindow:
     def sign_up(self):
         # Implement sign_up functionality here
         pass
+    def run(self):
+        self.root.mainloop()
+
+
+login_window = LoginWindow()
+login_window.run()
