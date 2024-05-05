@@ -26,4 +26,13 @@ class LoginWindow:
 
         self.password_label = Label(self.login_body, text='Password: ', font=("Forte", 25), bg='#D8A9B3')
         self.password_label.place(x=5, y=220, anchor='w')
-#    
+        
+        self.password_entry = Entry(self.login_body, show='*', bd=2, relief='ridge')
+        self.password_entry.place(x=100, y=260, width=280, height=25)
+
+        self.login_button = Button(self.root, text="Login", font=("Forte", 20), bg='white', fg='black', command=self.log_in)
+        self.login_button.place(x=110, y=460, width=120)
+
+        self.signup_button = Button(self.root, text="Sign Up", font=("Forte", 20), bg='white', fg='black', command=self.sign_up)
+        self.signup_button.place(x=250, y=460, width=120)
+   
