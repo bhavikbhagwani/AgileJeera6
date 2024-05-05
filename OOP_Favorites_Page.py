@@ -22,3 +22,14 @@ class FavoritesWindow:
 
         self.back_home_button = Button(self.root, text="Back to Home", width=20, height=3, bg="lightgrey", font=("Arial", 13, "bold"), command=self.show_home_page_from_favorites_page)
         self.back_home_button.place(x=((self.screen_width - self.back_home_button.winfo_reqwidth()) // 2), y=625)
+        
+    def show_home_page_from_favorites_page(self):
+        # Implement the functionality to switch back to the home page
+        pass
+
+    def on_closing(self):
+        # Implement the functionality to handle closing of the window
+        pass
+
+    def run(self):
+        self.root.mainloop()
