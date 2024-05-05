@@ -1,5 +1,6 @@
 import time
 
+
 def main():
     start_time = time.time()
     print("Timer started. Press Enter to stop.")
