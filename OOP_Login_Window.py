@@ -36,3 +36,9 @@ class LoginWindow:
         self.signup_button = Button(self.root, text="Sign Up", font=("Forte", 20), bg='white', fg='black', command=self.sign_up)
         self.signup_button.place(x=250, y=460, width=120)
    
+    def log_in(self):
+        # Implement log_in functionality here
+        pass
+    def sign_up(self):
+        # Implement sign_up functionality here
+        pass
