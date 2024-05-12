@@ -1,0 +1,15 @@
+
+
+        # Additional UI elements like images, text labels, etc., can be added here
+
+ 
+    def sign_up(self):
+        # Implement sign_up functionality here
+        pass
+
+    def run(self):
+        self.root.mainloop()
+
+# Usage:
+login_window = LoginWindow()
+login_window.run()
