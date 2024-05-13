@@ -39,6 +39,8 @@ install:
 installed:
 	$(PYTHON) -m pip list
 
+start:
+	$(PYTHON) src/whole_app_in_classes.py
 
 # ---------------------------------------------------------
 # Cleanup generated and installed files.
