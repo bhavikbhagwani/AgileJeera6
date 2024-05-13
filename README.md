@@ -21,64 +21,64 @@ git clone https://github.com/bhavikbhagwani/AgileJeera6.git
 
 Go into the src directory:
 
-cd src 
+    cd src 
 
 create the venv:
 
-make venv
+    make venv
 
 For Windows start the venv with:
 
-. .venv/Scripts/activate
+    . .venv/Scripts/activate
 
 For Unix and Macs start it with:
 
-.venv/bin/activate
+    .venv/bin/activate
 
 
 Install the dependencies:
 
-make install
+    make install
 
 ## To run the application
 The application can either be runed by executing the 'Whole_app_in_classes.py' file in the src directory or by executing this command:
 
-make start
+    make start
 
 ## Cleanup
 
 To clean up generated and installed files, use the following commands:
 
-make clean
+    make clean
 
 To clean up documentation files:
 
-make clean-doc
+    make clean-doc
 
 To clean up source files:
 
-make clean-src
+    make clean-src
 
 To clean up everything:
 
-make clean-all
+    make clean-all
 
 ## Testing
 
 To test all the code at once, you can use:
 
-make pylint or make flake8
+    make pylint or make flake8
 
 
 For linting:
 
-make lint
+    make lint
 
 For running tests:
 
-make test
+    make test
 
 ## Documentation
 To regenerate the documentation from the code, including the UML diagrams, go to the root directory of the project and execute this command:
 
-make doc
+    make doc
