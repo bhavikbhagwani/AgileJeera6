@@ -1,0 +1,11 @@
+For now, if you want to run the application, run
+
+    whole_app_in_classes_2.py
+    -------------------------
+
+NOT 
+
+    whole_app_in_classes.py
+    -----------------------
+
+thank you 
