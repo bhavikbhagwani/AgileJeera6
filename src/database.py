@@ -72,6 +72,8 @@ class Database:
         """Method to Add New User."""
         user_info = {"email":self.get_user_email(), "medi_sessions":[1, 2, 3, 4, 5, 6, 7, 8], "music_sessions" : [9, 10 ,11 , 12, 13, 14, 15, 16], "favorites":[], "progress":0}
         self.database.child("Users").child(user_ID).set(user_info)
+        print("New user created. user info: ")
+        print(user_info)
 
     def get_meditation_list_for_this_user(self, user_ID):
         """Method to get meditation list."""
@@ -100,3 +102,23 @@ class Database:
         progress = this_user.get("progress")
 
         return progress
+    
+    def save_user_info(self, user_ID, email, favorites_list, progress):
+        # Prepare user info
+        user_info = {
+            "email": email, 
+            "medi_sessions":[1,2,3,4,5,6,7,8], 
+            "music_sessions" : [9,10,11,12,13,14,15,16], 
+            "favorites":favorites_list, 
+            "progress":progress
+                    }
+        
+        # Retrieve user ID
+        print("User_ID retrieved for this user: ", user_ID)
+        try:
+            # store user info in database
+            self.database.child("Users").child(user_ID).set(user_info)
+            print("Data stored in database")
+            print(user_info)
+        except Exception as e:
+            print(f"Error: {e}")
