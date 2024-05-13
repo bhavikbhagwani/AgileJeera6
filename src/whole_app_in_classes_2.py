@@ -22,14 +22,14 @@ class Sounds:
             7: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/meditation_not_yet.mp3?alt=media&token=8b365f56-0498-45d9-a3c5-96d6bf42ab1b",
             8: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/meditation_not_yet.mp3?alt=media&token=8b365f56-0498-45d9-a3c5-96d6bf42ab1b",
             #study music
-            9: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/weekend.mp3?alt=media&token=9adf4712-b512-4d1c-ad89-5bde52ce6fbb",
-            10: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/pomodoro.mp3?alt=media&token=cb53c613-beca-4f18-9a16-87f3fdcdef81",
-            11: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/binary%20waves.mp3?alt=media&token=ddd36ecd-e28a-4770-b711-6fec19e369b7",
-            12: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/brown-noise.mp3?alt=media&token=459d74e9-fbf7-4e4a-ad20-8907c6229008",
-            13: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/slow%20jazz.mp3?alt=media&token=b93d625c-dfa3-4974-8d10-a09cc6a6c238",
-            14: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/romanticizing.mp3?alt=media&token=154e46db-5edf-4a27-9ced-f97eb521ed2c",
-            15: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/oppenheimer.mp3?alt=media&token=1793f3c4-deef-4cb9-bb74-71de8ef30ecb",
-            16: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/physics%20music.mp3?alt=media&token=bbcf1a23-b509-4a8e-a3b0-e28f4ae76a55"
+            9: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/Weekend.mp3?alt=media&token=f6d03c09-879c-49a3-83cc-8198529f6056",
+            10: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/pomodoro.mp3?alt=media&token=a4836308-37bc-41bf-9633-6966005cc3b9",
+            11: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/Ondas%20Binaurais%20Aumentar.mp3?alt=media&token=7b64983a-c6c1-4e27-ae18-159d65011b0e",
+            12: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/brown%20noise.mp3?alt=media&token=4aa913bb-4fec-4ca2-be4f-1ca40fb4c3d0",
+            13: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/classical.mp3?alt=media&token=8cc6f9a8-e82f-4935-a5bd-9cbc5ca96d7b",
+            14: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/Calming%20handpan.mp3?alt=media&token=f7a7d58f-9348-4d9c-99ce-dac8f57c6d14",
+            15: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/rain%2C%20books%20and%20coffee.mp3?alt=media&token=fb1e1ef4-0fd5-434a-bfc5-0ded1f96c934",
+            16: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/solas.mp3?alt=media&token=27aa5e4a-d2d8-4a92-a41d-1f1508f6e71b"
         }
 
         self.sound_to_name_dictionary = {
