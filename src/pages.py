@@ -1,6 +1,6 @@
 import time
 import tkinter as tk
-from tkinter import Button, Frame, Label, Menu, PhotoImage, messagebox
+from tkinter import LEFT, Button, Frame, Label, Menu, PhotoImage, messagebox
 from sounds import Sounds
 from database import Database
 
