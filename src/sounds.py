@@ -1,8 +1,37 @@
+"""Sounds class."""
 import pygame
 import io
 import requests
+
+"""
+    This class handles playing sounds for different activities such as meditation
+    and study music.
+
+    Attributes:
+    - sound_urls_dictionary (dict): A dictionary containing URLs of different
+      sound files mapped to their respective identifiers.
+    - sound_to_name_dictionary (dict): A dictionary mapping sound identifiers
+      to their corresponding names.
+
+    Methods:
+    - get_sound_url(number): Returns the URL of the sound file associated with
+      the given number.
+    - get_sound_name(number): Returns the name of the sound associated with the
+      given number.
+    - play_sound(number): Plays the sound associated with the given number.
+    - stop_sound(): Stops the currently playing sound.
+    """
+
 class Sounds:
+    
     def __init__(self):
+        
+        """
+        Initializes the Sounds class.
+
+        Initializes dictionaries containing URLs and names of sound files.
+        """
+
         #dictionary to store meditation and music mp3 files in FireBase Storage
         self.sound_urls_dictionary = {
             #meditation sessions
@@ -26,6 +55,7 @@ class Sounds:
         }
 
         self.sound_to_name_dictionary = {
+            #  Meditation session names
             1: "Breathing",
             2: "Mindfulness",
             3: "Focus",
@@ -34,6 +64,7 @@ class Sounds:
             6: "Body Scan",
             7: "MS7",
             8: "MS8",
+            #  Study music names
             9: "TheWeeknd",
             10: "Pomodoro",
             11: "Binary Waves",
@@ -45,13 +76,47 @@ class Sounds:
         }
     
     def get_sound_url(self, number):
+        """ 
+        Get URL of a Sound.
+
+        Returns the URL of the sound file associated with the given number.
+
+        Parameters:
+        - number (int): The identifier of the sound file.
+
+        Returns:
+        - str: The URL of the sound file.
+        """
         return self.sound_urls_dictionary.get(number)
     
     def get_sound_name(self, number):
+        
+        """
+        Get Name of a Sound.
+
+        Returns the name of the sound associated with the given number.
+
+        Parameters:
+        - number (int): The identifier of the sound.
+
+        Returns:
+        - str: The name of the sound.
+        """
+
         name_of_sound = self.sound_to_name_dictionary.get(number)
         return name_of_sound
 
     def play_sound(self, number):
+        
+        """
+        Play a Sound.
+
+        Plays the sound associated with the given number.
+
+        Parameters:
+        - number (int): The identifier of the sound to be played.
+        """
+
         sound_url = self.get_sound_url(number)
         response = requests.get(sound_url)
         sound_file = io.BytesIO(response.content)
@@ -60,4 +125,11 @@ class Sounds:
         pygame.mixer.music.play()
 
     def stop_sound(self):
+        
+        """
+        Stop Playing a Sound.
+
+        Stops the currently playing sound.
+        """
+        
         pygame.mixer.music.stop()
