@@ -4,6 +4,7 @@ from tkinter import Button, Frame, Label, Menu, PhotoImage, messagebox
 from sounds import Sounds
 from database import Database
 
+
 class BasePage(tk.Frame):
     def __init__(self, master, *args, **kwargs):
         super().__init__(master, *args, **kwargs)
@@ -153,7 +154,7 @@ class Page2(BasePage):
         self.home_page_header.place(x=((self.screen_width - self.home_page_header.winfo_reqwidth() )// 2),y=10)
 
         # Load image
-        self.image_4 = PhotoImage(file='image2.png')
+        self.image_4 = PhotoImage(file='profile_page_icon.png')
 
         # Define new width and height for the image
         self.new_width, self.new_height = 90,90  # Adjust the size as needed
@@ -209,8 +210,10 @@ class Page2(BasePage):
             session_frame = Frame(self.meditation_body, width=120, height=80, bg="#B3C8CF", padx=10, pady=10, highlightbackground="black", highlightthickness=1, highlightcolor="black")
             session_frame.grid(row=row, column=column, padx=10, pady=10, sticky="nsew")  # Add sticky option to stretch the frame
 
+            name = self.sounds.get_sound_name(session_num)
+
             # Label for the session
-            session_label = Label(session_frame, text=f"Meditation Session {session_num}", font=("Arial", 12), bg="#B3C8CF")
+            session_label = Label(session_frame, text=name, font=("Arial", 12), bg="#B3C8CF")
             session_label.pack(fill="both", expand=True)  # Fill the entire space of the frame
 
             # Buttons for Play and Pause
@@ -251,8 +254,10 @@ class Page2(BasePage):
                 session_frame = Frame(self.music_body, width=120, height=80, bg="#B3C8CF", padx=10, pady=10, highlightbackground="black", highlightthickness=1, highlightcolor="black")
                 session_frame.grid(row=row, column=column, padx=10, pady=10, sticky="nsew")  # Add sticky option to stretch the frame
 
+                name = self.sounds.get_sound_name(session_num)
+
                 # Label for the session
-                session_label = Label(session_frame, text=f"Study Music {session_num}", font=("Arial", 12), bg="#B3C8CF")
+                session_label = Label(session_frame, text=name, font=("Arial", 12), bg="#B3C8CF")
                 session_label.pack(fill="both", expand=True)  # Fill the entire space of the frame
 
                 # Buttons for Play and Pause
@@ -279,16 +284,16 @@ class Page2(BasePage):
         if number not in favorites_list:
             favorites_list.append(number)
 
-            if number in meditation_sessions_list:
-                message_to_display = f"Added Meditation Session {number} to Favorites"
-            else:
-                message_to_display = f"Added Study Music {number} to Favorites"
+            name = self.sounds.get_sound_name(number)
+
+            message_to_display = f"Added {name} to Favorites"
 
             messagebox.showinfo("Success",message_to_display)
     
     def save_everything_for_user(self):
         """Method to Save User's Contents/Progress into Database"""
         global user_ID
+        global email
         global start_time
         global progress
 
@@ -297,21 +302,7 @@ class Page2(BasePage):
         elapsed_time = end_time - start_time
         progress = progress + elapsed_time
 
-        # Prepare user info
-        user_info = {
-            "email": self.database.get_user_email(), 
-            "medi_sessions":[1,2,3,4,5,6,7,8], 
-            "music_sessions" : [9,10,11,12,13,14,15,16], 
-            "favorites":favorites_list, 
-            "progress":progress
-                    }
-        
-        # Retrieve user ID
-        try:
-            # store user info in database
-            self.database.database.child("Users").child(user_ID).set(user_info)
-        except Exception as e:
-            print(f"Error: {e}")
+        self.database.save_user_info(user_ID, email, favorites_list, progress)
 
     def go_to_page1(self):
         if messagebox.askokcancel("Log Out", "Are you sure you want to log out?"):
@@ -370,14 +361,11 @@ class Page3(BasePage):
                 session_frame = Frame(self.favorites_body, width=120, height=80, bg="lightgrey", padx=10, pady=10)
                 session_frame.grid(row=row, column=column, padx=10, pady=10, sticky="nsew")  # Add sticky option to stretch the frame
 
-                if session_num in meditation_sessions_list:
-                    # Label for the session
-                    session_label = Label(session_frame, text=f"Meditation Session {session_num}", font=("Arial", 12), bg="lightgrey")
-                    session_label.pack(fill="both", expand=True)  # Fill the entire space of the frame
-                else:
-                    # Label for the session
-                    session_label = Label(session_frame, text=f"Study Music {session_num}", font=("Arial", 12), bg="lightgrey")
-                    session_label.pack(fill="both", expand=True)  # Fill the entire space of the frame
+                name = self.sounds.get_sound_name(session_num)
+
+                # Label for the session
+                session_label = Label(session_frame, text=name, font=("Arial", 12), bg="lightgrey")
+                session_label.pack(fill="both", expand=True)
 
                 # Buttons for Play and Pause
                 button_frame = Frame(session_frame, bg="lightgrey")
@@ -403,10 +391,9 @@ class Page3(BasePage):
         favorites_list.remove(number)
         self.update_favorites_display()
 
-        if number in meditation_sessions_list:
-            message_to_display = f"Removed Meditation Session {number} from Favorites"
-        else:
-            message_to_display = f"Removed Study Music {number} from Favorites"
+        name = self.sounds.get_sound_name(number)
+
+        message_to_display = f"Removed {name} from Favorites"
 
         messagebox.showinfo("Success",message_to_display)
 
@@ -414,12 +401,12 @@ class Page3(BasePage):
         self.master.show_page(Page2)
 
 class Page4(BasePage):
-    
     def __init__(self, master, *args, **kwargs):
         super().__init__(master, *args, **kwargs)
 
         self.database = Database()
         self.configure(bg="#808080")
+        self.sounds = Sounds()
 
         global favorites_list
         global progress
@@ -433,7 +420,7 @@ class Page4(BasePage):
         self.title_label.place(x = 150 , y = 20)
 
         # Load image
-        self.image_2 = PhotoImage(file='image2.png')
+        self.image_2 = PhotoImage(file='profile_page_icon.png')
 
         # Define new width and height for the image
         self.new_width, self.new_height = 60,60  # Adjust the size as needed
@@ -448,7 +435,7 @@ class Page4(BasePage):
 
 
         #image 3
-        self.image_3 = PhotoImage(file='image3.png')
+        self.image_3 = PhotoImage(file='profile_page_image.png')
 
         self.new_width2, self.new_height2 = 800 , 800 
         self.image3_resized = self.image_3.subsample(int(self.image_3.width() / self.new_width),
@@ -466,20 +453,30 @@ class Page4(BasePage):
         global progress
         global email
         favorite_list_to_show =  favorites_list
+        new_favorites_list_to_show = []
+        print("favorite list before: ", favorite_list_to_show)
 
+        for number in favorite_list_to_show:
+            name = self.sounds.get_sound_name(number)
+            new_favorites_list_to_show.append(name)
+        print("new list: ",new_favorites_list_to_show)
+        
         end_time = time.time()
         elapsed_time = end_time - start_time
         progress = progress + elapsed_time
 
-        if favorite_list_to_show is None:
+        if len(favorite_list_to_show) == 0:
             bullet_points = '* no favorites yet'
 
-        bullet_points = '\n'.join([f'* {item}' for item in favorite_list_to_show])
+        else:
 
-        if len(favorite_list_to_show) > 5:
-            favorite_list_to_show = favorite_list_to_show[:5]
-            bullet_points = '\n'.join([f'* {item}' for item in favorite_list_to_show])
-            bullet_points += '\n      ... and more'
+
+            bullet_points = '\n'.join([f'* {item}' for item in new_favorites_list_to_show])
+
+            if len(favorite_list_to_show) > 5:
+                new_favorites_list_to_show = new_favorites_list_to_show[:5]
+                bullet_points = '\n'.join([f'* {item}' for item in new_favorites_list_to_show])
+                bullet_points += '\n      ... and more'
 
         progress = int(progress)
         hours = progress // 3600
@@ -520,5 +517,3 @@ class Page4(BasePage):
 
     def go_to_page2(self):
         self.master.show_page(Page2)
-
-
