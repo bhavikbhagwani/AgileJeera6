@@ -1,11 +1,13 @@
 For now, if you want to run the application, run
 
-    whole_app_in_classes_2.py
+    WAIC_3.py
     -------------------------
 
 NOT 
 
     whole_app_in_classes.py
+    OR
+    whole_app_in_classes_2.py
     -----------------------
 
 thank you 
