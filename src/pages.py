@@ -1,9 +1,14 @@
+"""Pages Class"""
+import os
 import time
 import tkinter as tk
 from tkinter import LEFT, Button, Frame, Label, Menu, PhotoImage, messagebox
+
+import pygame
 from sounds import Sounds
 from database import Database
 
+pygame.init()
 
 class BasePage(tk.Frame):
     def __init__(self, master, *args, **kwargs):
@@ -154,7 +159,7 @@ class Page2(BasePage):
         self.home_page_header.place(x=((self.screen_width - self.home_page_header.winfo_reqwidth() )// 2),y=10)
 
         # Load image
-        self.image_4 = PhotoImage(file='profile_page_icon.png')
+        self.image_4 = PhotoImage(file='image2.png')
 
         # Define new width and height for the image
         self.new_width, self.new_height = 90,90  # Adjust the size as needed
@@ -420,7 +425,7 @@ class Page4(BasePage):
         self.title_label.place(x = 150 , y = 20)
 
         # Load image
-        self.image_2 = PhotoImage(file='profile_page_icon.png')
+        self.image_2 = PhotoImage(file='image2.png')
 
         # Define new width and height for the image
         self.new_width, self.new_height = 60,60  # Adjust the size as needed
@@ -435,7 +440,7 @@ class Page4(BasePage):
 
 
         #image 3
-        self.image_3 = PhotoImage(file='profile_page_image.png')
+        self.image_3 = PhotoImage(file='image3.png')
 
         self.new_width2, self.new_height2 = 800 , 800 
         self.image3_resized = self.image_3.subsample(int(self.image_3.width() / self.new_width),
@@ -517,3 +522,95 @@ class Page4(BasePage):
 
     def go_to_page2(self):
         self.master.show_page(Page2)
+
+class MyApp(tk.Tk):
+    """
+    A class representing the main application window.
+
+    Attributes:
+        database (Database): An instance of the Database class for data storage.
+        current_page (tk.Frame): The currently displayed page in the application.
+    Methods:
+        __init__(): Initialize the application window and set up necessary components.
+
+        show_page(page): Switches between different pages of the application.
+
+        save_everything_for_user(): Save User's Contents/Progress into Database.
+
+        on_closing(): Handles the closing of the application window.
+        Prompts the user for confirmation and saves data before closing.
+    """
+    def __init__(self):
+        """
+        Initialize the application window and set up necessary components.
+        """
+        super().__init__()
+        self.title("Aumeter App")
+        self.database = Database()
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+        self.geometry(f"{screen_width}x{screen_height}")
+        self.current_page = None
+        self.show_page(Page1)
+        self.protocol("WM_DELETE_WINDOW", self.on_closing)
+
+    def show_page(self, page):
+        """
+        Switches between different pages of the application.
+
+        Args:
+            page: A class representing the page to be displayed.
+        """
+        if self.current_page:
+            self.current_page.pack_forget()  # Hide current page
+        self.current_page = page(self)  # Create new page
+        self.current_page.pack(fill="both", expand=True)  # Show new page
+
+    def save_everything_for_user(self):
+        """Method to Save User's Contents/Progress into Database"""
+        global start_time
+        global progress
+        global user_ID
+
+        # Stop time progress and calculate elapsed time
+        end_time = time.time()
+        elapsed_time = end_time - start_time
+        progress = progress + elapsed_time
+
+        favorites_list = []
+        
+        # Prepare user info
+        user_info = {
+            "email": self.database.get_user_email(), 
+            "medi_sessions":[1,2,3,4,5,6,7,8], 
+            "music_sessions" : [9,10,11,12,13,14,15,16], 
+            "favorites":favorites_list, 
+            "progress":progress
+                    }
+        
+        # Retrieve user ID
+        print("User_ID retrieved for this user: ", user_ID)
+        try:
+            # store user info in database
+            self.database.database.child("Users").child(user_ID).set(user_info)
+            print("Data stored in database")
+            print("favorite list stored: ", favorites_list)
+            print("progress sotred: ", progress)
+        except Exception as e:
+            print(f"Error: {e}")
+
+    def on_closing(self):
+        """
+        Handles the closing of the application window.
+
+        Prompts the user for confirmation and saves data before closing.
+        """
+        if messagebox.askokcancel("Quit", "Are you sure you want to quit?"):
+
+            self.save_everything_for_user()
+            #stop music if still playing
+            if pygame.mixer.music.get_busy():
+                pygame.mixer.music.stop()
+
+            self.destroy()
+            os.system("taskkill /F /T /PID {}".format(os.getpid()))
