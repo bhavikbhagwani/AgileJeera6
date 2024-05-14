@@ -1,6 +1,6 @@
-# AgileJeera6
+# AgileJeera6 🚀
 
-## About the application
+## About the application 📱
 - This application is driven by a graphical user interface (GUI), providing users with an intuitive way to interact with its features and functionalities.
 
 - Aumeter is a free, user-friendly meditation application aimed at improving mental health.
@@ -11,7 +11,7 @@
 
 - Aumeter integrates seamlessly with Firebase's real-time database for user authentication and storing session progress, ensuring that users can access their data across multiple devices and receive updates instantly.
 
-## Installation
+## Installation 🛠️
 Make sure you have make installed.
 With the terminal navigate to the location you want the game and execute this command:
 
@@ -40,12 +40,12 @@ Install the dependencies:
 
     make install
 
-## To run the application
+## To run the application ▶️
 The application can either be runed by executing the 'main.py' file in the src directory or by executing this command:
 
     make start
 
-## Cleanup
+## Cleanup 🧹
 
 To clean up generated and installed files, use the following commands:
 
@@ -63,7 +63,7 @@ To clean up everything:
 
     make clean-all
 
-## Testing
+## Testing ✅
 
 To test all the code at once, you can use:
 
@@ -78,7 +78,7 @@ For running tests:
 
     make test
 
-## Documentation
+## Documentation 📄
 To regenerate the documentation from the code, including the UML diagrams, go to the root directory of the project and execute this command:
 
     make doc
