@@ -809,6 +809,8 @@ class MyApp(tk.Tk):
         screen_width = self.winfo_screenwidth()
         screen_height = self.winfo_screenheight()
         self.geometry(f"{screen_width}x{screen_height}")
+        print("height: ", screen_height)
+        print("width: ",screen_width)
         self.current_page = None
         self.show_page(Page1)
         

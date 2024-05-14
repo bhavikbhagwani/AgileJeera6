@@ -21,6 +21,7 @@ class Page1(BasePage):
         self.configure(bg="#D8A9B3")
         screen_width = self.winfo_screenwidth()
         self.database = Database()
+        self.master.protocol("WM_DELETE_WINDOW", self.on_closing)
 
 
         self.title_label = tk.Label(self, text='Aumeter', font=("Algerian", 60),
@@ -132,6 +133,16 @@ class Page1(BasePage):
     def go_to_page2(self):
         self.master.show_page(Page2)
 
+    def on_closing(self):
+        """Method when user wants to exit."""
+        if messagebox.askokcancel("Quit", "Are you sure you want to quit?"):
+            if pygame.mixer.music.get_busy():
+                pygame.mixer.music.stop()
+
+            self.destroy()
+            os.system("taskkill /F /T /PID {}".format(os.getpid()))
+
+
 class Page2(BasePage):
     def __init__(self, master, *args, **kwargs):
         super().__init__(master, *args, **kwargs)
@@ -149,7 +160,7 @@ class Page2(BasePage):
         self.sounds = Sounds()
         self.database = Database()
 
-        """self.protocol("WM_DELETE_WINDOW", on_closing)"""
+        self.master.protocol("WM_DELETE_WINDOW", self.on_closing)
 
         self.configure(bg="#BED7DC")
 
@@ -183,6 +194,9 @@ class Page2(BasePage):
         self.profile_button = Button(self,text="View My Profile", width=20, height=3, bg="lightgrey", font=("Arial", 13, "bold"), command=self.go_to_page4)
         self.profile_button.place(x=((self.screen_width - self.fav_button.winfo_reqwidth() )// 2),y=400)
 
+        self.about_button = Button(self,text="View About Us", width=20, height=3, bg="lightgrey", font=("Arial", 13, "bold"), command=self.go_to_page5)
+        self.about_button.place(x=((self.screen_width - self.fav_button.winfo_reqwidth() )// 2),y=500)
+
         self.music_body = Frame(self, width=400, height=300, bg="#B3C8CF", highlightthickness=2, highlightcolor="black")
         self.music_body.place(x=1000, y=200)
 
@@ -195,6 +209,8 @@ class Page2(BasePage):
         menu.add_command(label="View Profile", command=self.go_to_page4)
         menu.add_separator()
         menu.add_command(label="View Favorites", command=self.go_to_page3)
+        menu.add_separator()
+        menu.add_command(label="About us", command=self.go_to_page5)
         menu.add_separator()
         menu.add_command(label="Logout", command=self.go_to_page1)
         menu.post(event.x_root, event.y_root)
@@ -312,6 +328,8 @@ class Page2(BasePage):
     def go_to_page1(self):
         if messagebox.askokcancel("Log Out", "Are you sure you want to log out?"):
             self.save_everything_for_user()
+            if pygame.mixer.music.get_busy():
+                pygame.mixer.music.stop()
             self.master.show_page(Page1)
     
     def go_to_page3(self):
@@ -319,6 +337,25 @@ class Page2(BasePage):
     
     def go_to_page4(self):
         self.master.show_page(Page4)
+    
+    def go_to_page5(self):
+        self.master.show_page(Page5)
+
+    def on_closing(self):
+        """Method when user wants to exit."""
+        if messagebox.askokcancel("Quit", "Are you sure you want to quit?"):
+            if pygame.mixer.music.get_busy():
+                pygame.mixer.music.stop()
+
+            try:
+                self.save_everything_for_user()
+            except NameError:
+                print("")
+            #stop music if still playing
+            
+
+            self.destroy()
+            os.system("taskkill /F /T /PID {}".format(os.getpid()))
 
 class Page3(BasePage):
     def __init__(self, master, *args, **kwargs):
@@ -327,10 +364,10 @@ class Page3(BasePage):
         self.configure(bg="lightblue")
         global favorites_list
         self.screen_width = self.winfo_screenwidth()
-
+        self.database = Database()
         self.sounds = Sounds()
 
-        """self.protocol("WM_DELETE_WINDOW", on_closing)"""
+        self.master.protocol("WM_DELETE_WINDOW", self.on_closing)
 
         self.favorites_page_header = Label(self, text="My Favorites", fg="black", bg = "lightblue", width=25, height=2, font=("Algerian", 50))
         self.favorites_page_header.place(x=((self.screen_width - self.favorites_page_header.winfo_reqwidth() )// 2),y=10)
@@ -405,6 +442,36 @@ class Page3(BasePage):
     def go_to_page2(self):
         self.master.show_page(Page2)
 
+    def save_everything_for_user(self):
+        """Method to Save User's Contents/Progress into Database"""
+        global user_ID
+        global email
+        global start_time
+        global progress
+
+        # Stop time progress and calculate elapsed time
+        end_time = time.time()
+        elapsed_time = end_time - start_time
+        progress = progress + elapsed_time
+
+        self.database.save_user_info(user_ID, email, favorites_list, progress)
+
+    def on_closing(self):
+        """Method when user wants to exit."""
+        if messagebox.askokcancel("Quit", "Are you sure you want to quit?"):
+            if pygame.mixer.music.get_busy():
+                pygame.mixer.music.stop()
+
+            try:
+                self.save_everything_for_user()
+            except NameError:
+                print("")
+            #stop music if still playing
+            
+
+            self.destroy()
+            os.system("taskkill /F /T /PID {}".format(os.getpid()))
+
 class Page4(BasePage):
     def __init__(self, master, *args, **kwargs):
         super().__init__(master, *args, **kwargs)
@@ -417,6 +484,7 @@ class Page4(BasePage):
         global progress
 
         self.screen_width = self.winfo_screenwidth()
+        self.master.protocol("WM_DELETE_WINDOW", self.on_closing)
 
         # Set window title
         self.title_label = Label(self, text='My Profile', font=("Georgia", 25, 'bold'),
@@ -469,6 +537,9 @@ class Page4(BasePage):
         end_time = time.time()
         elapsed_time = end_time - start_time
         progress = progress + elapsed_time
+
+        print("elapsed time: ", elapsed_time)
+        print("progress: ", progress)
 
         if len(favorite_list_to_show) == 0:
             bullet_points = '* no favorites yet'
@@ -523,94 +594,165 @@ class Page4(BasePage):
     def go_to_page2(self):
         self.master.show_page(Page2)
 
-class MyApp(tk.Tk):
-    """
-    A class representing the main application window.
-
-    Attributes:
-        database (Database): An instance of the Database class for data storage.
-        current_page (tk.Frame): The currently displayed page in the application.
-    Methods:
-        __init__(): Initialize the application window and set up necessary components.
-
-        show_page(page): Switches between different pages of the application.
-
-        save_everything_for_user(): Save User's Contents/Progress into Database.
-
-        on_closing(): Handles the closing of the application window.
-        Prompts the user for confirmation and saves data before closing.
-    """
-    def __init__(self):
-        """
-        Initialize the application window and set up necessary components.
-        """
-        super().__init__()
-        self.title("Aumeter App")
-        self.database = Database()
-        screen_width = self.winfo_screenwidth()
-        screen_height = self.winfo_screenheight()
-        self.geometry(f"{screen_width}x{screen_height}")
-        self.current_page = None
-        self.show_page(Page1)
-        self.protocol("WM_DELETE_WINDOW", self.on_closing)
-
-    def show_page(self, page):
-        """
-        Switches between different pages of the application.
-
-        Args:
-            page: A class representing the page to be displayed.
-        """
-        if self.current_page:
-            self.current_page.pack_forget()  # Hide current page
-        self.current_page = page(self)  # Create new page
-        self.current_page.pack(fill="both", expand=True)  # Show new page
-
     def save_everything_for_user(self):
         """Method to Save User's Contents/Progress into Database"""
+        global user_ID
+        global email
         global start_time
         global progress
-        global user_ID
 
         # Stop time progress and calculate elapsed time
         end_time = time.time()
         elapsed_time = end_time - start_time
         progress = progress + elapsed_time
 
-        favorites_list = []
-        
-        # Prepare user info
-        user_info = {
-            "email": self.database.get_user_email(), 
-            "medi_sessions":[1,2,3,4,5,6,7,8], 
-            "music_sessions" : [9,10,11,12,13,14,15,16], 
-            "favorites":favorites_list, 
-            "progress":progress
-                    }
-        
-        # Retrieve user ID
-        print("User_ID retrieved for this user: ", user_ID)
-        try:
-            # store user info in database
-            self.database.database.child("Users").child(user_ID).set(user_info)
-            print("Data stored in database")
-            print("favorite list stored: ", favorites_list)
-            print("progress sotred: ", progress)
-        except Exception as e:
-            print(f"Error: {e}")
+        self.database.save_user_info(user_ID, email, favorites_list, progress)
 
     def on_closing(self):
-        """
-        Handles the closing of the application window.
-
-        Prompts the user for confirmation and saves data before closing.
-        """
+        """Method when user wants to exit."""
         if messagebox.askokcancel("Quit", "Are you sure you want to quit?"):
-
-            self.save_everything_for_user()
-            #stop music if still playing
             if pygame.mixer.music.get_busy():
                 pygame.mixer.music.stop()
 
+            try:
+                self.save_everything_for_user()
+            except NameError:
+                print("")
+            #stop music if still playing
+            
+
             self.destroy()
             os.system("taskkill /F /T /PID {}".format(os.getpid()))
+
+class Page5(BasePage):
+    def __init__(self, master, *args, **kwargs):
+        super().__init__(master, *args, **kwargs)
+        self.configure(bg="#808080")
+        self.database = Database()
+        self.create_window()
+        self.master.protocol("WM_DELETE_WINDOW", self.on_closing)
+
+
+    def create_window(self):
+        # Creating the main rectangle frame
+        main_frame = Frame(self, width=600, height=400, relief='solid', borderwidth=2)
+        main_frame.pack(padx=20, pady=20)
+
+        # Creating squares with images and names
+        members = [
+            ("Bereket", "no_profile.png"),
+            ("Bhavik", "no_profile.png"),
+            ("Ahmed", "no_profile.png"),
+            ("Ghanasham", "no_profile.png"),
+            ("Ghazal", "no_profile.png")
+        ]
+        for i, (name, image_file) in enumerate(members):
+            square_frame = Frame(main_frame, width=100, height=100, relief='solid', borderwidth=1)
+            square_frame.grid(row=0, column=i, padx=10, pady=10)
+            label_image = Label(square_frame)
+            label_image.grid(row=0, column=0, padx=10, pady=10)
+            label_name = Label(square_frame, text=name)
+            label_name.grid(row=1, column=0)
+
+            # Load image
+            img = PhotoImage(file=image_file)
+            label_image.configure(image=img)
+            label_image.image = img  # Keep a reference to avoid garbage collection
+
+        # Creating the explanation text
+        explanation_text = """
+        Welcome to Aumeter, your ultimate destination for peace,relaxation, and mindfulness. Whether you're a seasoned 
+        meditator or just beginning your journey, Aumeter offers a sanctuary where you can find serenity amidst life's chaos.
+
+        Aumeter and its Key Features: 
+
+        Audial Meditation Sessions:
+        Immerse yourself in a realm of tranquility with our audial meditation sessions. All supported by scientific research
+        and designed to guide you through moments of mindfulness, these sessions utilize soothing sounds, calming music, and
+        guided narration to help you find inner peace and clarity. 
+
+        Application Usage Tracker:
+
+        Stay informed and motivated on your meditation journey with our application usage tracker.
+        You can view youre progress with Aumeter in your profile page
+
+        Study Music:
+
+        Enhance your focus and productivity with our curated collection of study music. Whether you're studying for exams, working on
+        a project, or seeking creative inspiration, our ambient music tracks create an optimal environment for concentration and mental clarity.
+
+        Personalized Favorites Preferences: 
+        
+        Tailor your meditation experience to suit your unique preferences with our personalized favorites
+        feature. Mark your favorite meditation sessions, and study music that resonates with you. 
+        """
+        explanation_label = tk.Label(self, text=explanation_text, wraplength=900, width = 95, justify="left", font=("Times New Roman", 12))
+        explanation_label.place(x=100, y=250)
+
+        self.back_home_button_2 = Button(self,text="Back to Home", width=20, height=3, bg="lightgrey", font=("Arial", 13, "bold"), command=self.go_to_page2)
+        self.back_home_button_2.place(x=1200,y=675)
+
+        #image 3
+        self.image_5 = PhotoImage(file='image3.png')
+
+        self.new_width2, self.new_height2 = 700 , 700 
+        self.image5_resized = self.image_5.subsample(int(self.image_5.width() / self.new_width2),
+                                                            int(self.image_5.height() / self.new_height2))
+        self.Label_image_5 = Label(self, image=self.image_5, border= 2 ,bg='#C0C0C0', relief='raised')
+        self.Label_image_5.place(x=1125, y=280)
+
+    def save_everything_for_user(self):
+        """Method to Save User's Contents/Progress into Database"""
+        global user_ID
+        global email
+        global start_time
+        global progress
+
+        # Stop time progress and calculate elapsed time
+        end_time = time.time()
+        elapsed_time = end_time - start_time
+        progress = progress + elapsed_time
+
+        self.database.save_user_info(user_ID, email, favorites_list, progress)
+
+    def on_closing(self):
+        """Method when user wants to exit."""
+        if messagebox.askokcancel("Quit", "Are you sure you want to quit?"):
+            if pygame.mixer.music.get_busy():
+                pygame.mixer.music.stop()
+
+            try:
+                self.save_everything_for_user()
+            except NameError:
+                print("")
+            #stop music if still playing
+            
+
+            self.destroy()
+            os.system("taskkill /F /T /PID {}".format(os.getpid()))
+
+    def go_to_page2(self):
+        self.master.show_page(Page2)
+
+
+class MyApp(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.title("Aumeter App")
+        self.database = Database()
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+        self.geometry(f"{screen_width}x{screen_height}")
+        print("height: ", screen_height)
+        print("width: ",screen_width)
+        self.current_page = None
+        self.show_page(Page1)
+        
+
+    def show_page(self, page):
+        if self.current_page:
+            self.current_page.pack_forget()  # Hide current page
+        self.current_page = page(self)  # Create new page
+        self.current_page.pack(fill="both", expand=True)  # Show new page
+
+    
