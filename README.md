@@ -41,7 +41,7 @@ Install the dependencies:
     make install
 
 ## To run the application
-The application can either be runed by executing the 'Whole_app_in_classes.py' file in the src directory or by executing this command:
+The application can either be runed by executing the 'main.py' file in the src directory or by executing this command:
 
     make start
 
