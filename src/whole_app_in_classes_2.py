@@ -43,12 +43,12 @@ class Sounds:
             8: "MS8",
             9: "TheWeeknd",
             10: "Pomodoro",
-            11: "Binary Waves",
+            11: "Ondas Binaurius",
             12: "Brown Noise",
-            13: "Slow Jazz",
-            14: "Romantic",
-            15: "Oppenheimer",
-            16: "Physics"
+            13: "Classical",
+            14: "Calming",
+            15: "Rain and Books",
+            16: "Solas"
         }
     
     def get_sound_url(self, number):
