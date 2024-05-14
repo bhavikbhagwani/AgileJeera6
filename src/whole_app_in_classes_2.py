@@ -219,7 +219,7 @@ class Page2(BasePage):
         self.home_page_header.place(x=((self.screen_width - self.home_page_header.winfo_reqwidth() )// 2),y=10)
 
         # Load image
-        self.image_4 = PhotoImage(file='profile_page_icon.png')
+        self.image_4 = PhotoImage(file='image2.png')
 
         # Define new width and height for the image
         self.new_width, self.new_height = 90,90  # Adjust the size as needed
@@ -485,7 +485,7 @@ class Page4(BasePage):
         self.title_label.place(x = 150 , y = 20)
 
         # Load image
-        self.image_2 = PhotoImage(file='profile_page_icon.png')
+        self.image_2 = PhotoImage(file='image2.png')
 
         # Define new width and height for the image
         self.new_width, self.new_height = 60,60  # Adjust the size as needed
@@ -500,7 +500,7 @@ class Page4(BasePage):
 
 
         #image 3
-        self.image_3 = PhotoImage(file='profile_page_image.png')
+        self.image_3 = PhotoImage(file='image3.png')
 
         self.new_width2, self.new_height2 = 800 , 800 
         self.image3_resized = self.image_3.subsample(int(self.image_3.width() / self.new_width),
