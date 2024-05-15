@@ -812,7 +812,7 @@ class Page4(BasePage):
                             font=("Georgia", 20, 'bold'), 
                             bg='#C0C0C0', fg='Black')
         Text_label_4.place(x= Text_labels_place_x_value, y = Text_label_4_place_y_value)
-        Text_label_5 = Label( Frame_Text ,text=f"{formatted_time}", font=("Georgia", 20, 'bold'), bg='#C0C0C0', fg='Black')
+        Text_label_5 = Label( Frame_Text ,text=f"{formatted_time}", font=("Georgia", 18, 'bold'), bg='#C0C0C0', fg='Black')
         Text_label_5.place(x= Text_labels_place_x_value, y = Text_label_5_place_y_value)
 
         back_home_button_width = int(screen_width / 76.8)
@@ -903,7 +903,7 @@ class Page5(BasePage):
             square_frame.grid(row=0, column=i, padx=padding_x_2, pady=padding_y_2)
             label_image = Label(square_frame)
             label_image.grid(row=0, column=0, padx=10, pady=10)
-            label_name = Label(square_frame, text=name, font=("bold"))
+            label_name = Label(square_frame, text=name)
             label_name.grid(row=1, column=0)
 
             # Load image
@@ -951,7 +951,7 @@ class Page5(BasePage):
         back_home_button_2_place_x_value = int(screen_width / 1.28)
         back_home_button_2_place_y_value = int(screen_height / 1.28)
 
-        self.back_home_button_2 = Button(self,text="Back to Home", width=20, height=3, bg="lightgrey", font=("Arial", 13, "bold"), command=self.go_to_page2)
+        self.back_home_button_2 = Button(self,text="Back to Home", width=back_home_button_2_width, height=back_home_button_2_height, bg="lightgrey", font=("Arial", 13, "bold"), command=self.go_to_page2)
         self.back_home_button_2.place(x=back_home_button_2_place_x_value,y=back_home_button_2_place_y_value)
 
         #image 3
