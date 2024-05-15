@@ -20,16 +20,16 @@ class Sounds:
             5: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/meditation_5.mp3?alt=media&token=bf410850-bb0b-4a7c-9b78-c6959872cdb4",
             6: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/meditation_6.mp3?alt=media&token=abe1079b-8243-4cb1-ab8b-d11a2f3751cd",
             7: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/meditation_7.mp3?alt=media&token=786153cf-a5e2-4e38-8a65-afd166e69acc",
-            8: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/meditation_8.mp3?alt=media&token=7485918d-8594-4c79-adae-51a9de3a6d8b",
+            8: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/meditation_8_2.mp3?alt=media&token=4f6ea3b1-b07d-4453-87db-12a74698377e",
             #study music
-            9: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/weekend.mp3?alt=media&token=9adf4712-b512-4d1c-ad89-5bde52ce6fbb",
-            10: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/pomodoro.mp3?alt=media&token=cb53c613-beca-4f18-9a16-87f3fdcdef81",
-            11: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/binary%20waves.mp3?alt=media&token=ddd36ecd-e28a-4770-b711-6fec19e369b7",
-            12: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/brown-noise.mp3?alt=media&token=459d74e9-fbf7-4e4a-ad20-8907c6229008",
-            13: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/slow%20jazz.mp3?alt=media&token=b93d625c-dfa3-4974-8d10-a09cc6a6c238",
-            14: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/romanticizing.mp3?alt=media&token=154e46db-5edf-4a27-9ced-f97eb521ed2c",
-            15: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/oppenheimer.mp3?alt=media&token=1793f3c4-deef-4cb9-bb74-71de8ef30ecb",
-            16: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/physics%20music.mp3?alt=media&token=bbcf1a23-b509-4a8e-a3b0-e28f4ae76a55"
+            9: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/weekend.mp3?alt=media&token=1103b55a-1728-4520-8cad-fcca39cbf0eb",
+            10: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/pomodoro.mp3?alt=media&token=600f4b56-4f91-47fd-ae9f-5c0c8aeeabd3",
+            11: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/ondas-binaurais.mp3?alt=media&token=d6c7088d-189e-406b-bba6-222d107e5a2b",
+            12: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/brown%20noise.mp3?alt=media&token=99bb1efb-85bf-4b3f-8a20-e8e639719971",
+            13: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/Calming%20handpan.mp3?alt=media&token=bcf07e4b-c8a6-4e59-930f-6c970557c229",
+            14: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/classical.mp3?alt=media&token=141b398a-147b-4754-aaaf-903b6ac07d30",
+            15: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/rain-books-and-coffee.mp3?alt=media&token=bb4350e0-345a-472a-a10d-3ae19881ad21",
+            16: "https://firebasestorage.googleapis.com/v0/b/aumeter-76464.appspot.com/o/solas.mp3?alt=media&token=06e43d6b-5045-4925-a92f-6416e689a6b0"
         }
 
         self.sound_to_name_dictionary = {
@@ -40,15 +40,15 @@ class Sounds:
             5: "Mantra - AUM",
             6: "Body Scan",
             7: "Fire",
-            8: "Mirror Glazing",
+            8: "Mirror Gazing",
             9: "TheWeeknd",
             10: "Pomodoro",
             11: "Binary Waves",
             12: "Brown Noise",
-            13: "Slow Jazz",
-            14: "Romantic",
-            15: "Oppenheimer",
-            16: "Physics"
+            13: "Calming Handpan",
+            14: "Classical Music",
+            15: "Rain and Books",
+            16: "Solas"
         }
     
     def get_sound_url(self, number):
