@@ -491,9 +491,6 @@ class Page2(BasePage):
     
     def go_to_page4(self):
         self.master.show_page(Page4)
-    
-    def go_to_page5(self):
-        self.master.show_page(Page5)
 
     def on_closing(self):
         """Method when user wants to exit."""
