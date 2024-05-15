@@ -868,11 +868,21 @@ class Page5(BasePage):
         self.create_window()
         self.master.protocol("WM_DELETE_WINDOW", self.on_closing)
 
+        
 
     def create_window(self):
+
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+
+
+        main_frame_width = int(screen_width / 2.56)
+        main_frame_height = int(screen_height / 2.16)
+        padding_x = int(screen_width / 76.8)
+        padding_y = int(screen_height / 43.2)
         # Creating the main rectangle frame
-        main_frame = Frame(self, width=600, height=400, relief='solid', borderwidth=2)
-        main_frame.pack(padx=20, pady=20)
+        main_frame = Frame(self, width=main_frame_width, height=main_frame_height, relief='solid', borderwidth=2)
+        main_frame.pack(padx=padding_x, pady=padding_y)
 
         # Creating squares with images and names
         members = [
@@ -882,12 +892,18 @@ class Page5(BasePage):
             ("Ghanasham", "no_profile.png"),
             ("Ghazal", "no_profile.png")
         ]
+
+        square_frame_width = int(screen_width / 15.36)
+        square_frame_height = int(screen_height / 8.64)
+        padding_x_2 = int(screen_width / 153.6)
+        padding_y_2 = int(screen_height / 86.4)
+
         for i, (name, image_file) in enumerate(members):
-            square_frame = Frame(main_frame, width=100, height=100, relief='solid', borderwidth=1)
-            square_frame.grid(row=0, column=i, padx=10, pady=10)
+            square_frame = Frame(main_frame, width=square_frame_width, height=square_frame_height, relief='solid', borderwidth=1)
+            square_frame.grid(row=0, column=i, padx=padding_x_2, pady=padding_y_2)
             label_image = Label(square_frame)
             label_image.grid(row=0, column=0, padx=10, pady=10)
-            label_name = Label(square_frame, text=name)
+            label_name = Label(square_frame, text=name, font=("bold"))
             label_name.grid(row=1, column=0)
 
             # Load image
@@ -910,7 +926,7 @@ class Page5(BasePage):
         Application Usage Tracker:
 
         Stay informed and motivated on your meditation journey with our application usage tracker.
-        You can view youre progress with Aumeter in your profile page
+        You can view you're progress with Aumeter in your profile page
 
         Study Music:
 
@@ -922,20 +938,34 @@ class Page5(BasePage):
         Tailor your meditation experience to suit your unique preferences with our personalized favorites
         feature. Mark your favorite meditation sessions, and study music that resonates with you. 
         """
-        explanation_label = tk.Label(self, text=explanation_text, wraplength=900, width = 95, justify="left", font=("Times New Roman", 12))
-        explanation_label.place(x=100, y=250)
+        explanation_label_wrap_length = int(screen_width / 1.706)
+        explanation_label_width = int(screen_width / 16.168)
+        explanation_label_place_x_value = int(screen_width / 15.36)
+        explanation_label_place_y_value = int(screen_height / 3.456)
+
+        explanation_label = tk.Label(self, text=explanation_text, wraplength=explanation_label_wrap_length, width = explanation_label_width, justify="left", font=("Times New Roman", 12))
+        explanation_label.place(x=explanation_label_place_x_value, y=explanation_label_place_y_value)
+
+        back_home_button_2_width = int(screen_width / 76.8)
+        back_home_button_2_height = int(screen_height / 288)
+        back_home_button_2_place_x_value = int(screen_width / 1.28)
+        back_home_button_2_place_y_value = int(screen_height / 1.28)
 
         self.back_home_button_2 = Button(self,text="Back to Home", width=20, height=3, bg="lightgrey", font=("Arial", 13, "bold"), command=self.go_to_page2)
-        self.back_home_button_2.place(x=1200,y=675)
+        self.back_home_button_2.place(x=back_home_button_2_place_x_value,y=back_home_button_2_place_y_value)
 
         #image 3
         self.image_5 = PhotoImage(file='image3.png')
 
-        self.new_width2, self.new_height2 = 700 , 700 
+        self.new_width2, self.new_height2 = int(screen_width / 2.194) , int(screen_height / 1.234) 
         self.image5_resized = self.image_5.subsample(int(self.image_5.width() / self.new_width2),
                                                             int(self.image_5.height() / self.new_height2))
+        
+        label_image_5_place_x_value = int(screen_width / 1.3653)
+        label_image_5_place_y_value = int(screen_height / 3.0857)
+
         self.Label_image_5 = Label(self, image=self.image_5, border= 2 ,bg='#C0C0C0', relief='raised')
-        self.Label_image_5.place(x=1125, y=280)
+        self.Label_image_5.place(x=label_image_5_place_x_value, y=label_image_5_place_y_value)
 
     def save_everything_for_user(self):
         """Method to Save User's Contents/Progress into Database"""
