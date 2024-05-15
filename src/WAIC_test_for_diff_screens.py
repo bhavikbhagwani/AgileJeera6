@@ -414,7 +414,7 @@ class Page2(BasePage):
 
             screen_width = self.winfo_screenwidth()
             screen_height = self.winfo_screenheight()
-            
+
             for widget in self.music_body.winfo_children():
                 widget.destroy()
 
@@ -526,31 +526,57 @@ class Page3(BasePage):
         self.configure(bg="lightblue")
         global favorites_list
         self.screen_width = self.winfo_screenwidth()
+
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
         self.database = Database()
         self.sounds = Sounds()
 
         self.master.protocol("WM_DELETE_WINDOW", self.on_closing)
 
-        self.favorites_page_header = Label(self, text="My Favorites", fg="black", bg = "lightblue", width=25, height=2, font=("Algerian", 50))
-        self.favorites_page_header.place(x=((self.screen_width - self.favorites_page_header.winfo_reqwidth() )// 2),y=10)
+        self.favorites_page_header_width = int(screen_width / 61.44)
+        self.favorites_page_header_height = int(screen_height / 432)
+        self.favorites_page_header_place_x_value = int(screen_height / 6.095)
+        self.favorites_page_header_place_y_value = int(screen_height / 86.4)
 
-        self.favorites_body = Frame(self, width=700, height=500, bg="white", highlightthickness=2, highlightcolor="black")
-        self.favorites_body.place(x=250, y=200)
+        self.favorites_page_header = Label(self, text="My Favorites", fg="black", bg = "lightblue", width=self.favorites_page_header_width, height=self.favorites_page_header_height, font=("Algerian", 50))
+        self.favorites_page_header.place(x=self.favorites_page_header_place_x_value,y=self.favorites_page_header_place_y_value)
 
-        self.back_home_button = Button(self,text="Back to Home", width=20, height=3, bg="lightgrey", font=("Arial", 13, "bold"), command=self.go_to_page2)
-        self.back_home_button.place(x=((self.screen_width - self.back_home_button.winfo_reqwidth() )// 2),y=625)
+        self.favorites_body_width = int(screen_width / 2.194)
+        self.favorites_body_height = int(screen_height / 1.728)
+        self.favorites_body_place_x_value = int(screen_width / 6.144)
+        self.favorites_body_place_y_value = int(screen_height / 4.32)
+
+        self.favorites_body = Frame(self, width=self.favorites_body_width, height=self.favorites_body_height, bg="white", highlightthickness=2, highlightcolor="black")
+        self.favorites_body.place(x=self.favorites_body_place_x_value, y=self.favorites_body_place_y_value)
+
+        self.back_home_button_width = int(screen_width / 76.8)
+        self.back_home_button_height = int(screen_height / 288)
+        
+        self.back_home_button_place_x_value = int(screen_width / 2.3167)
+        self.back_home_button_place_y_value = int(screen_height / 1.3824)
+
+
+        self.back_home_button = Button(self,text="Back to Home", width=self.back_home_button_width, height=self.back_home_button_height, bg="lightgrey", font=("Arial", 13, "bold"), command=self.go_to_page2)
+        self.back_home_button.place(x=self.back_home_button_place_x_value, y=self.back_home_button_place_y_value)
 
         self.update_favorites_display()
 
     def update_favorites_display(self):
         """Method to Update Favorites Frame Display."""
 
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+
+        padding_x= int(screen_width / 153.6)
+        padding_y = int(screen_height / 86.4)
+
         for widget in self.favorites_body.winfo_children():
                 widget.destroy()
 
         if len(favorites_list) == 0:
             text = Label(self.favorites_body, text="No Favorites Yet", font=("Arial", 16, "bold"))
-            text.grid(row=0, column=0, padx=10, pady=10)
+            text.grid(row=0, column=0, padx=padding_x, pady=padding_y)
         else:
             
 
@@ -558,12 +584,15 @@ class Page3(BasePage):
             num_rows = 3
             num_columns = 5
 
+            session_frame_width = int(screen_width / 12.8)
+            session_frame_height = int(screen_height / 10.8)
+
             # Initializing row and column counters
             row = 0
             column = 0
             for session_num in favorites_list:
-                session_frame = Frame(self.favorites_body, width=120, height=80, bg="lightgrey", padx=10, pady=10)
-                session_frame.grid(row=row, column=column, padx=10, pady=10, sticky="nsew")  # Add sticky option to stretch the frame
+                session_frame = Frame(self.favorites_body, width=session_frame_width, height=session_frame_height, bg="lightgrey", padx=padding_x, pady=padding_y)
+                session_frame.grid(row=row, column=column, padx=padding_x, pady=padding_y, sticky="nsew")  # Add sticky option to stretch the frame
 
                 name = self.sounds.get_sound_name(session_num)
 
@@ -642,39 +671,53 @@ class Page4(BasePage):
         self.configure(bg="#808080")
         self.sounds = Sounds()
 
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+
         global favorites_list
         global progress
 
         self.screen_width = self.winfo_screenwidth()
         self.master.protocol("WM_DELETE_WINDOW", self.on_closing)
 
+        self.title_label_padding_x = int(screen_width / 76.8)
+        self.title_label_padding_y = int(screen_height / 43.2)
+        self.title_label_place_x_value = int(screen_width / 10.24)
+        self.title_label_place_y_value = int(screen_height / 43.2)
+
         # Set window title
         self.title_label = Label(self, text='My Profile', font=("Georgia", 25, 'bold'),
                             bg='#808080',
-                            padx=20, pady=20)
-        self.title_label.place(x = 150 , y = 20)
+                            padx=self.title_label_padding_x, pady=self.title_label_padding_y)
+        self.title_label.place(x = self.title_label_place_x_value , y = self.title_label_place_y_value)
 
         # Load image
         self.image_2 = PhotoImage(file='image2.png')
 
         # Define new width and height for the image
-        self.new_width, self.new_height = 60,60  # Adjust the size as needed
+        self.new_width, self.new_height = int(screen_width / 25.6), int(screen_height / 14.4)  # Adjust the size as needed
 
         # Resize the image
         self.image_2_resized = self.image_2.subsample(int(self.image_2.width() / self.new_width),
                                                             int(self.image_2.height() / self.new_height))
 
+        self.additional_label_place_x_value = int(screen_width / 10.97)
+        self.additional_label_place_y_value = int(screen_height / 34.56)
+
         # Create label with resized image
         self.additional_label = Label(self, image=self.image_2_resized, bg='#D8A9B3', relief='raised')
-        self.additional_label.place(x=140, y=25, anchor='ne')
+        self.additional_label.place(x=self.additional_label_place_x_value, y=self.additional_label_place_y_value, anchor='ne')
 
 
         #image 3
         self.image_3 = PhotoImage(file='image3.png')
 
-        self.new_width2, self.new_height2 = 800 , 800 
+        self.new_width2, self.new_height2 = int(screen_width / 1.92) , int(screen_height / 1.08) 
         self.image3_resized = self.image_3.subsample(int(self.image_3.width() / self.new_width),
                                                             int(self.image_3.height() / self.new_height))
+        
+        self.Label_image_3_place_x_value = int(screen_width / 1.28)
+        self.Label_image_3_place_y_value = int(screen_height / 4.8)
         self.Label_image_3 = Label(self, image=self.image_3, border= 2 ,bg='#C0C0C0', relief='raised')
         self.Label_image_3.place(x=1200, y=180, anchor='ne')
 
@@ -683,6 +726,11 @@ class Page4(BasePage):
 
     def update_profile_page(self):
         """Method to Update Profile Page Display."""
+
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+
+
         global start_time
         global favorites_list
         global progress
@@ -722,33 +770,59 @@ class Page4(BasePage):
         seconds = progress % 60
         formatted_time = f"{hours} HOURS {minutes} MINUTES {seconds} SECONDS"
 
-        #Frame 
-        Frame_Text = Frame(self, width=550, height=560, bg='#C0C0C0', highlightthickness=2, highlightbackground="white")
-        Frame_Text.place(x=50, y=105)
 
-        #Email inside the frame 
+        Frame_Text_width = int(screen_width / 2.7927)
+        Frame_Text_height = int(screen_height / 1.5428)
+        Frame_Text_place_x_value = int(screen_width / 30.72)
+        Frame_Text_place_y_value = int(screen_height / 8.22857)
+        
+        #Frame 
+        Frame_Text = Frame(self, width=Frame_Text_width, height=Frame_Text_height, bg='#C0C0C0', highlightthickness=2, highlightbackground="white")
+        Frame_Text.place(x=Frame_Text_place_x_value, y=Frame_Text_place_y_value)
+
+
+        Text_labels_place_x_value = int(screen_width / 307.2)
+        Text_label_place_y_value = int(screen_height / 43.2)
+        
+        #Email inside the frame
         Text_label = Label( Frame_Text ,text="Email: ", font=("Georgia", 20, 'bold'), bg='#C0C0C0', fg='Black')
-        Text_label.place(x= 5, y = 20)
+        Text_label.place(x= Text_labels_place_x_value, y = Text_label_place_y_value)
+
+        Text_label_1_place_y_value = int(screen_height / 11.52)
+
         Text_label_1 = Label( Frame_Text ,text=f"* {email}", font=("Georgia", 18, 'bold'), bg='#C0C0C0', fg='Black')
-        Text_label_1.place(x= 5, y = 75)
+        Text_label_1.place(x= Text_labels_place_x_value, y = Text_label_1_place_y_value)
+
+        Text_label_2_place_y_value = int(screen_height / 6.1714)
+        Text_label_3_place_y_value = int(screen_height / 4.32)
 
         #Favorite inside the text frame
         Text_label_2 = Label( Frame_Text ,text="Favorites: ", font=("Georgia", 20, 'bold'), bg='#C0C0C0', fg='Black')
-        Text_label_2.place(x= 5, y = 140)
+        Text_label_2.place(x= Text_labels_place_x_value, y = Text_label_2_place_y_value)
         Text_label_3 = Label( Frame_Text ,text=bullet_points, font=("Georgia", 20, 'bold'), bg='#C0C0C0', fg='Black')
-        Text_label_3.place(x= 5, y = 200)
+        Text_label_3.place(x= Text_labels_place_x_value, y = Text_label_3_place_y_value)
 
         #Progress inside the text frame 
+
+
+        Text_label_4_place_y_value = int(screen_height / 2.107)
+        Text_label_5_place_y_value = int(screen_height / 1.92)
 
         Text_label_4 = Label( Frame_Text ,text="Time in App: ", 
                             font=("Georgia", 20, 'bold'), 
                             bg='#C0C0C0', fg='Black')
-        Text_label_4.place(x= 5, y = 410)
+        Text_label_4.place(x= Text_labels_place_x_value, y = Text_label_4_place_y_value)
         Text_label_5 = Label( Frame_Text ,text=f"{formatted_time}", font=("Georgia", 20, 'bold'), bg='#C0C0C0', fg='Black')
-        Text_label_5.place(x= 5, y = 450)
+        Text_label_5.place(x= Text_labels_place_x_value, y = Text_label_5_place_y_value)
 
-        back_home_button = Button(self, text="Back to Home", width=20, height=3, bg="lightgrey", font=("Arial", 13, "bold"), command=self.go_to_page2)
-        back_home_button.place(x=((self.screen_width - back_home_button.winfo_reqwidth() )// 2),y=625)
+        back_home_button_width = int(screen_width / 76.8)
+        back_home_button_height = int(screen_height / 288)
+        back_home_button_x_value = int(screen_width / 2.3167)
+        back_home_button_y_value = int(screen_height / 1.3824)
+
+
+        back_home_button = Button(self, text="Back to Home", width=back_home_button_width, height=back_home_button_height, bg="lightgrey", font=("Arial", 13, "bold"), command=self.go_to_page2)
+        back_home_button.place(x=back_home_button_x_value,y=back_home_button_y_value)
 
         start_time = time.time()
 
