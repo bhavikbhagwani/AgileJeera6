@@ -199,10 +199,7 @@ class Page1(BasePage):
             meditation_sessions_list = self.database.get_meditation_list_for_this_user(user_ID)
             music_list = self.database.get_study_music_list_for_this_user(user_ID)
             favorites_list = self.database.get_favorites_list_for_this_user(user_ID)
-            print("favorites retrieved when logged in: ", favorites_list)
             progress = self.database.get_progress(user_ID)
-            print("progress retrieved when logged in: ", progress)
-            print("user_ID retrieved when logged in after success: ", user_ID)
             self.go_to_page2()
 
             start_time = time.time()
@@ -325,9 +322,6 @@ class Page2(BasePage):
         self.profile_button = Button(self,text="View My Profile", width=self.buttons_width, height=self.buttons_height, bg="lightgrey", font=("Arial", 13, "bold"), command=self.go_to_page4)
         self.profile_button.place(x=self.buttons_place_x_val, y=int(screen_height / 2.16))
 
-        self.about_button = Button(self,text="View About Us", width=self.buttons_width, height=self.buttons_height, bg="lightgrey", font=("Arial", 13, "bold"), command=self.go_to_page5)
-        self.about_button.place(x=self.buttons_place_x_val, y=int(screen_height / 1.728))
-
         self.music_body_width = int(screen_width / 3.84)
         self.music_body_height = int(screen_height / 2.88)
         self.music_body_place_x_value = int(screen_width / 1.536)
@@ -345,8 +339,6 @@ class Page2(BasePage):
         menu.add_command(label="View Profile", command=self.go_to_page4)
         menu.add_separator()
         menu.add_command(label="View Favorites", command=self.go_to_page3)
-        menu.add_separator()
-        menu.add_command(label="About us", command=self.go_to_page5)
         menu.add_separator()
         menu.add_command(label="Logout", command=self.go_to_page1)
         menu.post(event.x_root, event.y_root)
@@ -735,19 +727,14 @@ class Page4(BasePage):
         global email
         favorite_list_to_show =  favorites_list
         new_favorites_list_to_show = []
-        print("favorite list before: ", favorite_list_to_show)
 
         for number in favorite_list_to_show:
             name = self.sounds.get_sound_name(number)
             new_favorites_list_to_show.append(name)
-        print("new list: ",new_favorites_list_to_show)
         
         end_time = time.time()
         elapsed_time = end_time - start_time
         progress = progress + elapsed_time
-
-        print("elapsed time: ", elapsed_time)
-        print("progress: ", progress)
 
         if len(favorite_list_to_show) == 0:
             bullet_points = '* no favorites yet'
@@ -858,148 +845,6 @@ class Page4(BasePage):
             self.destroy()
             os.system("taskkill /F /T /PID {}".format(os.getpid()))
 
-class Page5(BasePage):
-    def __init__(self, master, *args, **kwargs):
-        super().__init__(master, *args, **kwargs)
-        self.configure(bg="#808080")
-        self.database = Database()
-        self.create_window()
-        self.master.protocol("WM_DELETE_WINDOW", self.on_closing)
-
-        
-
-    def create_window(self):
-
-        screen_width = self.winfo_screenwidth()
-        screen_height = self.winfo_screenheight()
-
-
-        main_frame_width = int(screen_width / 2.56)
-        main_frame_height = int(screen_height / 2.16)
-        main_frame_place_x_value = int(screen_width / 4.8)
-        main_frame_place_y_value = int(screen_height / 86.4)
-        # Creating the main rectangle frame
-        main_frame = Frame(self, width=main_frame_width, height=main_frame_height, relief='solid', borderwidth=2)
-        main_frame.place(x=main_frame_place_x_value, y=main_frame_place_y_value)
-
-        # Creating squares with images and names
-        members = [
-            ("Bereket", "no_profile.png"),
-            ("Bhavik", "no_profile.png"),
-            ("Ahmed", "no_profile.png"),
-            ("Ghanasham", "no_profile.png"),
-            ("Ghazal", "no_profile.png")
-        ]
-
-        square_frame_width = int(screen_width / 15.36)
-        square_frame_height = int(screen_height / 8.64)
-        padding_x_2 = int(screen_width / 153.6)
-        padding_y_2 = int(screen_height / 86.4)
-
-        for i, (name, image_file) in enumerate(members):
-            square_frame = Frame(main_frame, width=square_frame_width, height=square_frame_height, relief='solid', borderwidth=1)
-            square_frame.grid(row=0, column=i, padx=padding_x_2, pady=padding_y_2)
-            label_image = Label(square_frame)
-            label_image.grid(row=0, column=0, padx=10, pady=10)
-            label_name = Label(square_frame, text=name)
-            label_name.grid(row=1, column=0)
-
-            # Load image
-            img = PhotoImage(file=image_file)
-            label_image.configure(image=img)
-            label_image.image = img  # Keep a reference to avoid garbage collection
-
-        # Creating the explanation text
-        explanation_text = """
-        Welcome to Aumeter, your ultimate destination for peace,relaxation, and mindfulness. Whether you're a seasoned 
-        meditator or just beginning your journey, Aumeter offers a sanctuary where you can find serenity amidst life's chaos.
-
-        Aumeter and its Key Features: 
-
-        Audial Meditation Sessions:
-        Immerse yourself in a realm of tranquility with our audial meditation sessions. All supported by scientific research
-        and designed to guide you through moments of mindfulness, these sessions utilize soothing sounds, calming music, and
-        guided narration to help you find inner peace and clarity. 
-
-        Application Usage Tracker:
-
-        Stay informed and motivated on your meditation journey with our application usage tracker.
-        You can view you're progress with Aumeter in your profile page
-
-        Study Music:
-
-        Enhance your focus and productivity with our curated collection of study music. Whether you're studying for exams, working on
-        a project, or seeking creative inspiration, our ambient music tracks create an optimal environment for concentration and mental clarity.
-
-        Personalized Favorites Preferences: 
-        
-        Tailor your meditation experience to suit your unique preferences with our personalized favorites
-        feature. Mark your favorite meditation sessions, and study music that resonates with you. 
-        """
-        explanation_label_wrap_length = int(screen_width / 1.687)
-        explanation_label_width = int(screen_width / 13.963)
-        explanation_label_place_x_value = int(screen_width / 15.36)
-        explanation_label_place_y_value = int(screen_height / 3.456)
-
-        explanation_label = tk.Label(self, text=explanation_text, wraplength=explanation_label_wrap_length, width = explanation_label_width, justify="left", font=("Times New Roman", 12))
-        explanation_label.place(x=explanation_label_place_x_value, y=explanation_label_place_y_value)
-
-
-        self.new_width, self.new_height = int(screen_width / 25.6), int(screen_height / 14.4)  # Adjust the size as needed
-        
-
-        #image 3
-        self.image_3 = PhotoImage(file='image3.png')
-        self.image3_resized = self.image_3.subsample(int(self.image_3.width() / self.new_width),
-                                                            int(self.image_3.height() / self.new_height))
-        
-        self.Label_image_3 = Label(self, image=self.image_3, border= 2 ,bg='#C0C0C0', relief='raised')
-        self.Label_image_3.place(x=int(screen_width / 1.3653), y=int(screen_height / 3.0857))
-
-
-        back_home_button_2_width = int(screen_width / 76.8)
-        back_home_button_2_height = int(screen_height / 288)
-        back_home_button_2_place_x_value = int(screen_width / 1.28)
-        back_home_button_2_place_y_value = int(screen_height / 1.28)
-
-        self.back_home_button_2 = Button(self,text="Back to Home", width=back_home_button_2_width, height=back_home_button_2_height, bg="lightgrey", font=("Arial", 13, "bold"), command=self.go_to_page2)
-        self.back_home_button_2.place(x=back_home_button_2_place_x_value,y=back_home_button_2_place_y_value)
-
-        
-
-    def save_everything_for_user(self):
-        """Method to Save User's Contents/Progress into Database"""
-        global user_ID
-        global email
-        global start_time
-        global progress
-
-        # Stop time progress and calculate elapsed time
-        end_time = time.time()
-        elapsed_time = end_time - start_time
-        progress = progress + elapsed_time
-
-        self.database.save_user_info(user_ID, email, favorites_list, progress)
-
-    def on_closing(self):
-        """Method when user wants to exit."""
-        if messagebox.askokcancel("Quit", "Are you sure you want to quit?"):
-            if pygame.mixer.music.get_busy():
-                pygame.mixer.music.stop()
-
-            try:
-                self.save_everything_for_user()
-            except NameError:
-                print("")
-            #stop music if still playing
-            
-
-            self.destroy()
-            os.system("taskkill /F /T /PID {}".format(os.getpid()))
-
-    def go_to_page2(self):
-        self.master.show_page(Page2)
-
 
 class MyApp(tk.Tk):
     def __init__(self):
@@ -1009,8 +854,7 @@ class MyApp(tk.Tk):
         screen_width = self.winfo_screenwidth()
         screen_height = self.winfo_screenheight()
         self.geometry(f"{screen_width}x{screen_height}")
-        print("height: ", screen_height)
-        print("width: ", screen_width)
+
         self.current_page = None
         self.show_page(Page1)
         
@@ -1024,5 +868,9 @@ class MyApp(tk.Tk):
     
 
 if __name__ == "__main__":
-    app = MyApp()
-    app.mainloop()
+    try:
+
+        app = MyApp()
+        app.mainloop()
+    except Exception as e:
+        print("an error occurred: ", e)
