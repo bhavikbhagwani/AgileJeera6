@@ -711,15 +711,13 @@ class Page4(BasePage):
 
         #image 3
         self.image_3 = PhotoImage(file='image3.png')
-
-        self.new_width2, self.new_height2 = int(screen_width / 1.92) , int(screen_height / 1.08) 
         self.image3_resized = self.image_3.subsample(int(self.image_3.width() / self.new_width),
                                                             int(self.image_3.height() / self.new_height))
         
         self.Label_image_3_place_x_value = int(screen_width / 1.28)
         self.Label_image_3_place_y_value = int(screen_height / 4.8)
         self.Label_image_3 = Label(self, image=self.image_3, border= 2 ,bg='#C0C0C0', relief='raised')
-        self.Label_image_3.place(x=1200, y=180, anchor='ne')
+        self.Label_image_3.place(x=self.Label_image_3_place_x_value, y=self.Label_image_3_place_y_value, anchor='ne')
 
         self.update_profile_page()
 
@@ -878,11 +876,11 @@ class Page5(BasePage):
 
         main_frame_width = int(screen_width / 2.56)
         main_frame_height = int(screen_height / 2.16)
-        padding_x = int(screen_width / 76.8)
-        padding_y = int(screen_height / 43.2)
+        main_frame_place_x_value = int(screen_width / 4.8)
+        main_frame_place_y_value = int(screen_height / 86.4)
         # Creating the main rectangle frame
         main_frame = Frame(self, width=main_frame_width, height=main_frame_height, relief='solid', borderwidth=2)
-        main_frame.pack(padx=padding_x, pady=padding_y)
+        main_frame.place(x=main_frame_place_x_value, y=main_frame_place_y_value)
 
         # Creating squares with images and names
         members = [
@@ -943,8 +941,21 @@ class Page5(BasePage):
         explanation_label_place_x_value = int(screen_width / 15.36)
         explanation_label_place_y_value = int(screen_height / 3.456)
 
-        explanation_label = tk.Label(self, text=explanation_text, wraplength=explanation_label_wrap_length, width = explanation_label_width, justify="left", font=("Times New Roman", 12))
+        explanation_label = tk.Label(self, text=explanation_text, wraplength=910, width = 110, justify="left", font=("Times New Roman", 12))
         explanation_label.place(x=explanation_label_place_x_value, y=explanation_label_place_y_value)
+
+
+        self.new_width, self.new_height = int(screen_width / 25.6), int(screen_height / 14.4)  # Adjust the size as needed
+        
+
+        #image 3
+        self.image_3 = PhotoImage(file='image3.png')
+        self.image3_resized = self.image_3.subsample(int(self.image_3.width() / self.new_width),
+                                                            int(self.image_3.height() / self.new_height))
+        
+        self.Label_image_3 = Label(self, image=self.image_3, border= 2 ,bg='#C0C0C0', relief='raised')
+        self.Label_image_3.place(x=int(screen_width / 1.3653), y=int(screen_height / 3.0857))
+
 
         back_home_button_2_width = int(screen_width / 76.8)
         back_home_button_2_height = int(screen_height / 288)
@@ -954,18 +965,7 @@ class Page5(BasePage):
         self.back_home_button_2 = Button(self,text="Back to Home", width=back_home_button_2_width, height=back_home_button_2_height, bg="lightgrey", font=("Arial", 13, "bold"), command=self.go_to_page2)
         self.back_home_button_2.place(x=back_home_button_2_place_x_value,y=back_home_button_2_place_y_value)
 
-        #image 3
-        self.image_5 = PhotoImage(file='image3.png')
-
-        self.new_width2, self.new_height2 = int(screen_width / 2.194) , int(screen_height / 1.234) 
-        self.image5_resized = self.image_5.subsample(int(self.image_5.width() / self.new_width2),
-                                                            int(self.image_5.height() / self.new_height2))
         
-        label_image_5_place_x_value = int(screen_width / 1.3653)
-        label_image_5_place_y_value = int(screen_height / 3.0857)
-
-        self.Label_image_5 = Label(self, image=self.image_5, border= 2 ,bg='#C0C0C0', relief='raised')
-        self.Label_image_5.place(x=label_image_5_place_x_value, y=label_image_5_place_y_value)
 
     def save_everything_for_user(self):
         """Method to Save User's Contents/Progress into Database"""
