@@ -1,0 +1,42 @@
+# Firebase dependencies
+pyrebase4==4.5.0
+firebase-admin==6.5.0
+
+# HTTP Requests
+requests==2.26.0
+urllib3==1.26.8
+requests_toolbelt==0.9.1
+
+# Game Development
+pygame==2.1.2
+
+# Cloud Services
+gcloud>=0.18.3
+
+# Authentication
+oauth2client>=4.1.2
+python-jwt==2.0.1
+
+# Cryptography
+pycryptodome>=3.6.4
+
+# Code analysis
+bandit
+flake8
+flake8-docstrings
+flake8-polyfill
+
+# Metrics
+pylint
+radon
+
+# Code style
+black
+
+# Documentation
+pdoc3
+sphinx
+sphinx-rtd-theme # for ReadTheDocs local build
+
+# Unit test and coverage
+coverage
