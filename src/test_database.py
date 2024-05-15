@@ -6,7 +6,6 @@ UNIT TESTING
 import unittest
 from unittest.mock import patch, MagicMock
 import database
-from firebase_admin import auth
 
 class TestDatabase(unittest.TestCase):
     """Test the Database Class."""
@@ -100,6 +99,10 @@ class TestDatabase(unittest.TestCase):
         self.assertIsInstance(progress_retrieved, int)
 
         test_database.database.child("Users").child(user_ID).remove()
+
+"""
+The testing of the Database will only work once after run. To test it again contact aumeterteam@gmail.com
+"""
 
 if __name__ == "__main__":
     unittest.main()
