@@ -936,12 +936,12 @@ class Page5(BasePage):
         Tailor your meditation experience to suit your unique preferences with our personalized favorites
         feature. Mark your favorite meditation sessions, and study music that resonates with you. 
         """
-        explanation_label_wrap_length = int(screen_width / 1.706)
-        explanation_label_width = int(screen_width / 16.168)
+        explanation_label_wrap_length = int(screen_width / 1.687)
+        explanation_label_width = int(screen_width / 13.963)
         explanation_label_place_x_value = int(screen_width / 15.36)
         explanation_label_place_y_value = int(screen_height / 3.456)
 
-        explanation_label = tk.Label(self, text=explanation_text, wraplength=910, width = 110, justify="left", font=("Times New Roman", 12))
+        explanation_label = tk.Label(self, text=explanation_text, wraplength=explanation_label_wrap_length, width = explanation_label_width, justify="left", font=("Times New Roman", 12))
         explanation_label.place(x=explanation_label_place_x_value, y=explanation_label_place_y_value)
 
 
