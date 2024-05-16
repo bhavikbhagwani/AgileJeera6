@@ -39,9 +39,6 @@ install:
 installed:
 	$(PYTHON) -m pip list
 
-start:
-	$(PYTHON) src/whole_app_in_classes.py
-
 # ---------------------------------------------------------
 # Cleanup generated and installed files.
 #
@@ -73,3 +70,9 @@ lint: flake8 pylint
 
 test:
 	$(call FOREACH,test)
+	
+start:
+	@$(call MESSAGE,$@)
+	 # OPEN AUMETER APP
+	 $(PYTHON) src/app.py
+	 # AUMETER APP CLOSED

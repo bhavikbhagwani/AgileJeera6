@@ -151,3 +151,9 @@ metrics: radon-cc radon-mi radon-raw radon-hal cohesion
 bandit:
 	@$(call MESSAGE,$@)
 	bandit --recursive .
+
+start:
+	@$(call MESSAGE,$@)
+	 # OPEN AUMETER APP
+	 $(PYTHON) app.py
+	 # AUMETER APP CLOSED

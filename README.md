@@ -25,9 +25,10 @@ by Mikael Roos
 
 The Makefile contains a target to execute or run several commands.
 
-## Cloning App
+## Cloning App and Terminal
 
-With the terminal navigate to the location you want the game and execute this command:
+We encourage you to play in Git Bash as a terminal. 
+With the terminal navigate to the location you want the game in and execute this command:
 
     git clone https://github.com/bhavikbhagwani/AgileJeera6.git
 
@@ -67,12 +68,8 @@ Install the needed dependencies using:
 
     make install
 
-## before running
-It is important to download two other dependancies that are required in order
-for this application to function: pygame and pyrebase. These can be done in the terminal:
-    pip install pygame
-
-    pip install pyrebase4
+This will also install pygame and pyrebase, two important
+dependancies that are required for the application to run
 
 
 ## To run the application ▶️
@@ -81,7 +78,12 @@ The MakeFile provides a command for running the application, by typing:
 The application can be initialized in two ways:
 One way is by executing the 'app.py' file in the src directory:
 
+    cd src
     python app.py
+
+or outside the src directory:
+
+    python src/app.py
 
 Another way is by using the MakeFile. The MakeFile provides a
 command for running the application, by typing:
@@ -107,6 +109,9 @@ To clean up everything:
     make clean-all
 
 ## Testing ✅
+Testing is done inside the src folder
+
+    cd src
 
 For running unit tests you can type:
 
@@ -121,6 +126,10 @@ or separetaly using
         make flake8         make pylint
 
 ## Documentation 📄
+Documentation is done inside the src folder
+
+    cd src
+    
 Documentation is a helpful feature to help understand the code for other developers
 First of all install the 'dot' command  to help generate the UML diagrams from the source code
 For windows, you can do it through chocolatey in Powershell as administrator:
