@@ -148,23 +148,12 @@ After the installation is done you can check what version you got.
 
         $ dot -V
 
-To generate HTML documentation for all classes just type
-
-        make pdoc
-
-This will generate HTML documentation inside doc/pdoc
-
 To generate UML diagrams you can just type
 
         make pyreverse
 
 This will generate UML diagrams inside doc/pyreverse
-
-Now, you should have a doc/ directory inside pig with pyreverse/ and pdoc/
-
-You can also just run the two targets directly (pyreverse and pdoc) using
-
-                make doc
-
-The pdoc folder will have HTML documentation for all classes found and
-the pyreverse folder will have UML diagrams for all classes found
+Note: the UML diagrams will involve all files inside the src folder.
+We have two ways of storing the app:
+One where eveything is in one file, excluding the Database class
+Another where the classes are separated into files, except the Pages
