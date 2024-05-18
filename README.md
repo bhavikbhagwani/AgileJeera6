@@ -165,3 +165,10 @@ Another where the classes are separated into modules, except the Pages
 
 To view the accurate UML arquitecture of the app, there is an image in
 the directory called 'aumeter_UML.png' which you can view
+
+## Contact us
+We have an organization email from where you can contact us:
+        aumeterteam@gmail.com
+
+## A MESSAGE FROM AUMETER
+Thank you for using Aumeter
