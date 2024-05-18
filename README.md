@@ -125,6 +125,11 @@ or separetaly using
 
         make flake8         make pylint
 
+You can also analyse the code from a security perspective to see
+any security flaws on the code using. Do this inside the src folder using:
+
+    make bandit
+
 ## Documentation 📄
 Documentation is done inside the src folder
 
@@ -156,4 +161,7 @@ This will generate UML diagrams inside doc/pyreverse
 Note: the UML diagrams will involve all files inside the src folder.
 We have two ways of storing the app:
 One where eveything is in one file, excluding the Database class
-Another where the classes are separated into files, except the Pages
+Another where the classes are separated into modules, except the Pages
+
+To view the accurate UML arquitecture of the app, there is an image in
+the directory called 'aumeter_UML.png' which you can view
