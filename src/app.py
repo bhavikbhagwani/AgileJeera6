@@ -221,7 +221,6 @@ class Page1(BasePage):
             self.username_entry.delete(0, "end")
             self.password_entry.delete(0, "end")
             
-            self.database.add_user(user_ID)
             messagebox.showinfo("Success","Sign Up Successful, you will be directed to the home page")
             email = self.database.get_user_email()
             meditation_sessions_list = self.database.get_meditation_list_for_this_user(user_ID)

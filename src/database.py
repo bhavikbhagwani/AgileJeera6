@@ -44,8 +44,8 @@ class Database:
         try:
             self.authentication.create_user_with_email_and_password(email, password)
             self.authentication.sign_in_with_email_and_password(email, password)
-
             user_ID = self.get_user_ID()
+            self.add_user(user_ID)
 
             return True, user_ID
         except:
@@ -72,8 +72,7 @@ class Database:
         """Method to Add New User."""
         user_info = {"email":self.get_user_email(), "medi_sessions":[1, 2, 3, 4, 5, 6, 7, 8], "music_sessions" : [9, 10 ,11 , 12, 13, 14, 15, 16], "favorites":[], "progress":0}
         self.database.child("Users").child(user_ID).set(user_info)
-        print("New user created. user info: ")
-        print(user_info)
+    
 
     def get_meditation_list_for_this_user(self, user_ID):
         """Method to get meditation list."""
