@@ -27,8 +27,8 @@ The Makefile contains a target to execute or run several commands.
 
 ## Cloning App and Terminal
 
-We encourage you to play in Git Bash as a terminal. 
-With the terminal navigate to the location you want the game in and execute this command:
+We encourage you to use Git Bash as a terminal to execute all necessary commands. 
+With the Git Bash terminal navigate to the location you want the game in and execute this command:
 
     git clone https://github.com/bhavikbhagwani/AgileJeera6.git
 
