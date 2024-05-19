@@ -34,9 +34,9 @@ With the Git Bash terminal navigate to the location you want the game in and exe
 
 
 
-Go into the src directory:
+Go into the AgileJeera6 directory:
 
-    cd src 
+    cd AgileJeera6 
 
 ## SETTING VENV
 
@@ -89,24 +89,6 @@ Another way is by using the MakeFile. The MakeFile provides a
 command for running the application, by typing:
 
     make start
-
-## Cleanup 🧹
-
-To clean up generated and installed files, use the following commands:
-
-    make clean
-
-To clean up documentation files:
-
-    make clean-doc
-
-To clean up source files:
-
-    make clean-src
-
-To clean up everything:
-
-    make clean-all
 
 ## Testing ✅
 Testing is done inside the src folder
@@ -165,6 +147,24 @@ Another where the classes are separated into modules, except the Pages
 
 To view the accurate UML arquitecture of the app, there is an image in
 the directory called 'aumeter_UML.png' which you can view
+
+## Cleanup 🧹
+
+To clean up generated and installed files, use the following commands:
+
+    make clean
+
+To clean up documentation files:
+
+    make clean-doc
+
+To clean up source files:
+
+    make clean-src
+
+To clean up everything:
+
+    make clean-all
 
 ## Contact us
 We have an organization email from where you can contact us:
