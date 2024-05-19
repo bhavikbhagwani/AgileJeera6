@@ -99,14 +99,6 @@ For running unit tests you can type:
 
     make unittest
 
-You can run linters using
-
-        make lint
-
-or separetaly using
-
-        make flake8         make pylint
-
 You can also analyse the code from a security perspective to see
 any security flaws on the code using. Do this inside the src folder using:
 
