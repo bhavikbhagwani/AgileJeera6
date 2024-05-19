@@ -115,7 +115,7 @@ Testing is done inside the src folder
 
 For running unit tests you can type:
 
-    make test
+    make unittest
 
 You can run linters using
 
