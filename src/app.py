@@ -270,7 +270,6 @@ class Page2(BasePage):
 
         self.configure(bg="#BED7DC")
 
-        heart_image = PhotoImage(file="heart3.png")
 
         self.home_page_header_width = int(screen_width / 61.44)
         self.home_page_header_height = int(screen_height / 432)
